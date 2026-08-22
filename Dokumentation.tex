@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper,oneside]{scrreprt}
+
+% Tabellenfarben frueh aktivieren, bevor xcolor geladen wird.
+\PassOptionsToPackage{table}{xcolor}
+
+% Zentrale Stil-Datei. Allgemeines Layout und PM-Geruestbausteine liegen gemeinsam in settings.sty.
+\usepackage{settings}
+
+% Abbildungs- und Tabellenverzeichnis koennen bei Bedarf zugeschaltet werden.
+\KOMAoptions{toc=listof}
+
+% ---------------------------------------------------------------------------
+% Ordnerstruktur
+% ---------------------------------------------------------------------------
+\SetGraphicsFolder{graphics}
+\renewcommand{\TextFolder}{texte/}
+
+% ---------------------------------------------------------------------------
+% Seitenraender
+% Reihenfolge: links, rechts, oben, unten.
+% Diese vier Werte koennen direkt hier angepasst werden.
+% ---------------------------------------------------------------------------
+% ---------------------------------------------------------------------------
+% Seitenlayout
+% ---------------------------------------------------------------------------
+
+% Abstand vom Blattrand
+\newcommand{\SeitenrandOben}{3mm}
+\newcommand{\SeitenrandUnten}{3mm}
+\newcommand{\SeitenrandLinks}{10mm}
+\newcommand{\SeitenrandRechts}{10mm}
+
+% Einstellungen auf das gesamte Dokument anwenden
+% Reihenfolge des Befehls: links, rechts, oben, unten
+\SetPageMargins
+{\SeitenrandLinks}
+{\SeitenrandRechts}
+{\SeitenrandOben}
+{\SeitenrandUnten}
+% ---------------------------------------------------------------------------
+% Dokumentdaten: nur Platzhalter, keine Projektinhalte
+% ---------------------------------------------------------------------------
+\renewcommand{\DocumentType}{Projektdokumentation}
+%\renewcommand{\DocumentTitle}{[Projekttitel]}
+%\renewcommand{\DocumentSubtitle}{[Untertitel]}
+\renewcommand{\DocumentUnit}{}
+\renewcommand{\DocumentTopic}{}
+\renewcommand{\DocumentDescription}{}
+
+\renewcommand{\InstitutionName}{Fakultät für Elektrische Energietechnik}
+\renewcommand{\DepartmentName}{[Informatik und Elektrotechnik]}
+\renewcommand{\CourseName}{[Modul / Kurs]}
+\renewcommand{\TermName}{[WiSe 26/27]}
+\renewcommand{\InstructorName}{Prof. Dr. Patrick Henning}
+\renewcommand{\SubmissionDate}{\today}
+\renewcommand{\GroupName}{}
+
+\renewcommand{\DocumentShortTitle}{[Kurztitel]}
+\renewcommand{\DocumentFooterLabel}{[Modul]}
+\renewcommand{\DocumentLogoPath}{graphics/haw_logo.png}
+\renewcommand{\DocumentLogoXOffset}{-20mm} % positiv = rechts, negativ = links
+\renewcommand{\DocumentLogoYOffset}{0mm} % positiv = oben, negativ = unten
+\renewcommand{\DocumentLogoWidth}{80mm} % Groesse des Logos auf der Titelseite
+
+% ---------------------------------------------------------------------------
+% Bearbeiter:innen
+% Weitere Zeilen koennen durch Entfernen des Kommentarzeichens aktiviert werden.
+% ---------------------------------------------------------------------------
+\SetParticipantOne{Jannis Graeser}{947813}{jannis.graeser@stu.haw-kiel.de}
+\SetParticipantTwo{Dominic M. Eriksson}{945747}{dominic.m.eriksson@stu.haw-kiel.de}
+\SetParticipantThree{}{}{}
+\SetParticipantFour{}{}{}
+\SetParticipantFive{}{}{}
+\SetParticipantSix{}{}{}
+\SetParticipantSeven{}{}{}
+\SetParticipantEight{}{}{}
+\SetParticipantNine{}{}{}
+\SetParticipantTen{}{}{}
+
+% Kurze Angaben in Kopf- und Fusszeile vermeiden Ueberlaenge bei grossen Gruppen.
+\SetHeader{\ResolvedDocumentShortTitle}{\ResolvedDocumentFooterLabel}{\pagemark}
+\SetFooter{\GroupName}{}{Seite \thepage\ von \pageref{LastPage}}
+
+\begin{document}
+
+    \hypersetup{pageanchor=false}
+    \MakeDocumentTitle
+
+% --------------------- Vorspann ---------------------
+    \pagenumbering{Roman}
+    \tableofcontents
+
+% Optional einschalten, sobald Abbildungen oder Tabellen vorhanden sind:
+%   \listoffigures
+%   \listoftables
+%   \listequations
+    \clearpage
+
+% --------------------- Hauptteil --------------------
+    \StartMainMatter
+
+    \input{texte/01_einleitung}
+    \input{texte/02_technischer_ist_zustand}
+    \input{texte/03_analyse_und_reverse_engineering}
+    \input{texte/04_fehleranalyse_und_instandssetzung}
+    \input{texte/05_entwicklung_der_steuerung}
+    \input{texte/06_gesamtsystem_und_inbetriebnahme}
+    \input{texte/07_funktionsprüfung_und_ergebnisse}
+    \input{texte/08_projektverlauf}
+
+
+
+
+
+% --------------------- Anhang -----------------------
+    \appendix
+    \input{texte/99_anhang}
+
+% --------------------- Literatur --------------------
+% Bei Bedarf aktivieren und Quellen in bib.bib eintragen:
+%   \printbibliography[heading=litverz]
+
+\end{document}

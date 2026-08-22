@@ -1,0 +1,1133 @@
+% ============================================================================
+% settings.sty
+% Saubere Stil-Datei fuer Laborberichte und Ausarbeitungen
+% Stand: 2026-08-18
+% ============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{settings}[2026/07/12 Vorlage fuer Laborberichte und Projektdokumentationen]
+
+% ---------------------------------------------------------------------------
+% 1) Grundpakete, Schrift und Sprache
+% ---------------------------------------------------------------------------
+\RequirePackage{iftex}
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+
+\ifPDFTeX
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage[scaled=0.95]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\else
+\RequirePackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\IfFontExistsTF{TeX Gyre Heros}{%
+    \setsansfont{TeX Gyre Heros}%
+}{%
+    \IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{Latin Modern Sans}}%
+}%
+\IfFontExistsTF{Latin Modern Roman}{\setmainfont{Latin Modern Roman}}{}
+\IfFontExistsTF{Latin Modern Mono}{\setmonofont{Latin Modern Mono}}{}
+\renewcommand{\familydefault}{\sfdefault}
+\fi
+
+\RequirePackage[main=ngerman,english]{babel}
+\RequirePackage{csquotes}
+\RequirePackage{microtype}
+\RequirePackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% ---------------------------------------------------------------------------
+% 2) Farben, Grafiken und Ordnerlogik
+% ---------------------------------------------------------------------------
+\RequirePackage[table]{xcolor}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{colortbl}
+\RequirePackage{graphicx}
+\RequirePackage{pdfpages}
+
+\definecolor{ModulePrimary}{HTML}{1F457F}
+\definecolor{ModulePrimaryLight}{HTML}{D3DDED}
+\definecolor{ModuleSecondary}{HTML}{D8DFCE}
+\definecolor{ModuleAccentWarm}{HTML}{E8DDD0}
+\definecolor{ModuleSoftBackground}{HTML}{F5F6F8}
+\definecolor{ModuleLine}{HTML}{6D6D6D}
+\definecolor{ModuleText}{HTML}{222222}
+\definecolor{ModuleTableHeader}{RGB}{225,225,225}
+\definecolor{ModuleTableStripe}{RGB}{245,245,245}
+\definecolor{ModuleFormulaBackground}{RGB}{243,243,243}
+
+% Farben fuer Phasenplaene / Gantt-Diagramme
+\definecolor{PhaseStart}{HTML}{5B9BD5}
+\definecolor{PhaseConcept}{HTML}{8ED973}
+\definecolor{PhaseProcurement}{HTML}{802276}
+\definecolor{PhaseBuild}{HTML}{F27632}
+\definecolor{PhaseTest}{HTML}{FFF200}
+\definecolor{PhaseFinish}{HTML}{FF1A1A}
+\color{ModuleText}
+
+% Bilder werden automatisch hier gesucht. Normalerweise reicht: \includegraphics{dateiname}
+\graphicspath{{graphic/}{graphics/}{graphix/}}
+% BILDORDNER: Erweitert den Suchpfad fuer Grafiken um einen eigenen Ordner.
+% Beispiel: \SetGraphicsFolder{graphic}
+\NewDocumentCommand{\SetGraphicsFolder}{m}{\graphicspath{{#1/}{graphic/}{graphics/}{graphix/}}}
+
+% Textdateien werden ueber \inputfile{dateiname} aus diesem Ordner geladen.
+\newcommand{\TextFolder}{texte/}
+% TEX-DATEI EINBINDEN: Laedt eine Datei aus dem in \TextFolder definierten Ordner.
+% Beispiel: \inputfile{01_einleitung}
+\NewDocumentCommand{\inputfile}{m}{\input{\TextFolder#1}}
+
+% ---------------------------------------------------------------------------
+% 3) Tabellen, Listen, Mathe und Code
+% ---------------------------------------------------------------------------
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{xltabular}
+\RequirePackage{array}
+\RequirePackage{ragged2e}
+\RequirePackage{makecell}
+\RequirePackage{multirow}
+\RequirePackage{float}
+\RequirePackage{adjustbox}
+\RequirePackage{enumitem}
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{amsthm}
+\RequirePackage{siunitx}
+\RequirePackage{listings}
+\RequirePackage{tikz}
+\RequirePackage{pgfgantt}
+\RequirePackage{pgfplots}
+\RequirePackage{pdflscape}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage[section]{placeins}
+\RequirePackage{tocbasic}
+\RequirePackage{lastpage}
+\RequirePackage{eurosym}
+\RequirePackage{rotating}
+\RequirePackage{xurl}
+\RequirePackage[
+    headsepline,
+    footsepline,
+    plainheadsepline,
+    plainfootsepline
+]{scrlayer-scrpage}
+\RequirePackage[
+    backend=biber,
+    style=authoryear-comp,
+    sorting=nyt,
+    maxbibnames=3,
+    hyperref=true,
+    giveninits=true,
+    uniquename=init,
+    doi=false,
+    isbn=false,
+    url=true
+]{biblatex}
+\RequirePackage[hidelinks,breaklinks]{hyperref}
+\RequirePackage[capitalise,noabbrev]{cleveref}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,decorations.pathreplacing,calc,positioning}
+
+
+% Einheitlicher Stil fuer kompakte Phasenplaene.
+% Die Diagrammbreite wird in der jeweiligen Datei mit adjustbox begrenzt.
+\ganttset{
+    project phase plan/.style={
+        hgrid={*1{draw=black!12}},
+        vgrid={*1{draw=black!10}},
+        x unit=4.8mm,
+        y unit title=7mm,
+        y unit chart=9mm,
+        title height=1,
+        title/.style={fill=white,draw=black!12},
+        title label font=\scriptsize\bfseries,
+        bar height=0.50,
+        bar label font=\footnotesize,
+        bar label node/.append style={
+            align=left,
+            text width=65mm,
+            minimum height=9mm,
+            inner xsep=2mm,
+            anchor=east
+        },
+        canvas/.append style={draw=black!12}
+    }
+}
+
+\sisetup{
+    locale = DE,
+    output-decimal-marker = {,},
+    group-separator = {.},
+    group-minimum-digits = 4,
+    detect-all = true,
+    separate-uncertainty = true,
+    per-mode = fraction,
+    parse-numbers = true,
+    input-decimal-markers = {, .}
+}
+\DeclareSIUnit{\decade}{Dekade}
+\DeclareSIUnit\rpm{rpm}
+\DeclareSIUnit\peak{p}
+\DeclareSIUnit\kWh{kWh}
+% SI-WERT: Kurzform fuer Zahlen mit Einheit ueber siunitx.
+% Beispiel: \siv{12,5}{\volt}
+\newcommand{\siv}[2]{\SI{#1}{#2}}
+
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+\setlength{\arrayrulewidth}{0.5pt}
+% TABELLENSPALTEN: P/L/C/R sind feste p-Spalten; Y/Z sind flexible tabularx-Spalten.
+% Beispiel: \begin{tabularx}{\textwidth}{P{3cm}Y} ... \end{tabularx}
+\newcolumntype{P}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\Centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\RaggedLeft\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{Z}{>{\RaggedLeft\arraybackslash}X}
+
+% PHASENNUMMERIERUNG: Eigener Zaehler fuer automatisch nummerierte Phasen in Tabellen.
+% Beispiel: Vor der Tabelle \ResetPhaseCounter, in jeder Datenzeile in Spalte 1: \phasennr
+\newcounter{phase}
+
+% PHASENNUMMER: Erhoeht den Phasenzaehler und gibt die aktuelle Nummer fett aus.
+% Beispiel: \phasennr & \texttt{Bestandsaufnahme} & \textsf{...} \\
+\newcommand{\phasennr}{\stepcounter{phase}\textbf{\thephase}}
+
+% PHASENZAEHLER ZURUECKSETZEN: Setzt die automatische Phasennummerierung wieder auf 0.
+% Beispiel: \ResetPhaseCounter
+\newcommand{\ResetPhaseCounter}{\setcounter{phase}{0}}
+
+% TABELLENSTIL: Einheitliche Schriftgroesse, Zellabstaende, Linien und Streifen.
+% Wird von der Umgebung GPMTable automatisch aktiviert.
+\newcommand{\TableSetup}{%
+    \scriptsize
+    \renewcommand{\arraystretch}{1.25}%
+    \setlength{\tabcolsep}{4pt}%
+    \setlength{\arrayrulewidth}{0.5pt}%
+}
+
+% TABELLENKOPF: Einheitliche Formatierung einer Spaltenueberschrift.
+% Beispiel: \TableHead{Verwendungszweck}
+\newcommand{\TableHead}[1]{\textbf{#1}}
+
+% EINHEITLICHE GPM-TABELLE:
+% - ist immer exakt \textwidth breit,
+% - kann ueber mehrere Seiten laufen,
+% - wiederholt die Kopfzeile nach einem Seitenumbruch,
+% - setzt Tabellenstil, Beschriftung und Label automatisch.
+%
+% Argument 1: Spaltenaufteilung, mindestens eine Y-Spalte verwenden
+% Argument 2: Tabellenbeschriftung
+% Argument 3: Label
+% Argument 4: Inhalt der Kopfzeile
+%
+% Beispiel:
+% \begin{GPMTable}
+%   {L{3cm}|Y|L{2cm}}
+%   {Personalressourcen des Projekts}
+%   {tab:personalressourcen}
+%   {\TableHead{Person} & \TableHead{Aufgabe} & \TableHead{Aufwand}}
+%   Max Mustermann & Planung und Dokumentation & 20 h \\
+%   \hline
+% \end{GPMTable}
+\NewDocumentEnvironment{GPMTable}{m m m m +b}{%
+    \begingroup
+    \TableSetup
+    \begin{xltabular}{\linewidth}{|#1|}
+    \hline
+    \rowcolor{ModuleTableHeader}
+    #4 \\
+    \hline
+    \endfirsthead
+
+    \hline
+    \rowcolor{ModuleTableHeader}
+    #4 \\
+    \hline
+    \endhead
+
+    #5
+
+    \ifstrempty{#2}{}{%
+        \caption{#2}%
+        \ifstrempty{#3}{}{%
+            \label{#3}%
+        }%
+    }%
+    \end{xltabular}
+    \endgroup
+}{}
+% =========================================================
+% Querformat für breite GPM-Tabellen
+% =========================================================
+% =========================================================
+% Querformat für breite Tabellen
+% =========================================================
+
+\NewDocumentEnvironment{GPMLandscape}{}
+{%
+    \clearpage
+    \begin{landscape}
+    \setlength{\tabcolsep}{4pt}
+}
+{%
+    \end{landscape}
+    \clearpage
+}
+
+\lstdefinestyle{vorlagenstyle}{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=8pt,
+    breaklines=true,
+    frame=single,
+    tabsize=2,
+    showstringspaces=false
+}
+\lstset{style=vorlagenstyle}
+
+\setlist[itemize]{topsep=0.3em,itemsep=0.15em,leftmargin=*}
+\setlist[enumerate]{topsep=0.3em,itemsep=0.15em,leftmargin=*}
+
+% ---------------------------------------------------------------------------
+% 4) Querverweise und Literatur
+% ---------------------------------------------------------------------------
+\crefname{chapter}{Kapitel}{Kapitel}
+\Crefname{chapter}{Kapitel}{Kapitel}
+\crefname{section}{Abschnitt}{Abschnitte}
+\Crefname{section}{Abschnitt}{Abschnitte}
+\crefname{subsection}{Abschnitt}{Abschnitte}
+\Crefname{subsection}{Abschnitt}{Abschnitte}
+\crefname{figure}{Abbildung}{Abbildungen}
+\Crefname{figure}{Abbildung}{Abbildungen}
+\crefname{table}{Tabelle}{Tabellen}
+\Crefname{table}{Tabelle}{Tabellen}
+\crefname{equation}{Gleichung}{Gleichungen}
+\Crefname{equation}{Gleichung}{Gleichungen}
+
+\addbibresource{bib.bib}
+\urlstyle{same}
+\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\url{#1}}
+\setlength{\bibitemsep}{0.6\baselineskip}
+\renewcommand*{\bibfont}{\small}
+\DefineBibliographyStrings{ngerman}{
+    bibliography = {Literaturverzeichnis},
+    references   = {Literaturverzeichnis},
+    urlseen      = {stand vom}
+}
+\defbibheading{litverz}{\chapter*{Literaturverzeichnis}}
+
+% ---------------------------------------------------------------------------
+% 5) Dokumentdaten
+% ---------------------------------------------------------------------------
+\newcommand{\DocumentType}{Laborbericht}
+\newcommand{\DocumentTitle}{}
+\newcommand{\DocumentSubtitle}{}
+\newcommand{\DocumentUnit}{}
+\newcommand{\DocumentTopic}{}
+\newcommand{\DocumentDescription}{}
+\newcommand{\InstitutionName}{}
+\newcommand{\DepartmentName}{}
+\newcommand{\CourseName}{}
+\newcommand{\TermName}{}
+\newcommand{\InstructorName}{}
+\newcommand{\SubmissionDate}{\today}
+\newcommand{\GroupName}{}
+\newcommand{\DocumentShortTitle}{}
+\newcommand{\DocumentFooterLabel}{}
+\newcommand{\DocumentLogoPath}{}
+\newcommand{\DocumentLogoWidth}{45mm}
+% Positive X-Werte verschieben das Logo nach rechts, positive Y-Werte nach oben.
+\newcommand{\DocumentLogoXOffset}{0mm}
+\newcommand{\DocumentLogoYOffset}{0mm}
+
+\newcommand{\ParticipantOneName}{}
+\newcommand{\ParticipantOneId}{}
+\newcommand{\ParticipantOneEmail}{}
+\newcommand{\ParticipantTwoName}{}
+\newcommand{\ParticipantTwoId}{}
+\newcommand{\ParticipantTwoEmail}{}
+\newcommand{\ParticipantThreeName}{}
+\newcommand{\ParticipantThreeId}{}
+\newcommand{\ParticipantThreeEmail}{}
+\newcommand{\ParticipantFourName}{}
+\newcommand{\ParticipantFourId}{}
+\newcommand{\ParticipantFourEmail}{}
+\newcommand{\ParticipantFiveName}{}
+\newcommand{\ParticipantFiveId}{}
+\newcommand{\ParticipantFiveEmail}{}
+\newcommand{\ParticipantSixName}{}
+\newcommand{\ParticipantSixId}{}
+\newcommand{\ParticipantSixEmail}{}
+\newcommand{\ParticipantSevenName}{}
+\newcommand{\ParticipantSevenId}{}
+\newcommand{\ParticipantSevenEmail}{}
+\newcommand{\ParticipantEightName}{}
+\newcommand{\ParticipantEightId}{}
+\newcommand{\ParticipantEightEmail}{}
+\newcommand{\ParticipantNineName}{}
+\newcommand{\ParticipantNineId}{}
+\newcommand{\ParticipantNineEmail}{}
+\newcommand{\ParticipantTenName}{}
+\newcommand{\ParticipantTenId}{}
+\newcommand{\ParticipantTenEmail}{}
+
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 1.
+% Beispiel: \SetParticipantOne{Max Mustermann}{123456}{max@example.de}
+\newcommand{\SetParticipantOne}[3]{%
+    \renewcommand{\ParticipantOneName}{#1}%
+    \renewcommand{\ParticipantOneId}{#2}%
+    \renewcommand{\ParticipantOneEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 2.
+% Beispiel: \SetParticipantTwo{Erika Muster}{654321}{erika@example.de}
+\newcommand{\SetParticipantTwo}[3]{%
+    \renewcommand{\ParticipantTwoName}{#1}%
+    \renewcommand{\ParticipantTwoId}{#2}%
+    \renewcommand{\ParticipantTwoEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 3.
+% Beispiel: \SetParticipantThree{Dritte Person}{111111}{dritte@example.de}
+\newcommand{\SetParticipantThree}[3]{%
+    \renewcommand{\ParticipantThreeName}{#1}%
+    \renewcommand{\ParticipantThreeId}{#2}%
+    \renewcommand{\ParticipantThreeEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 4.
+% Beispiel: \SetParticipantFour{Vierte Person}{222222}{vierte@example.de}
+\newcommand{\SetParticipantFour}[3]{%
+    \renewcommand{\ParticipantFourName}{#1}%
+    \renewcommand{\ParticipantFourId}{#2}%
+    \renewcommand{\ParticipantFourEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 5.
+% Beispiel: \SetParticipantFive{Fuenfte Person}{333333}{fuenfte@example.de}
+\newcommand{\SetParticipantFive}[3]{%
+    \renewcommand{\ParticipantFiveName}{#1}%
+    \renewcommand{\ParticipantFiveId}{#2}%
+    \renewcommand{\ParticipantFiveEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 6.
+% Beispiel: \SetParticipantSix{Sechste Person}{444444}{sechste@example.de}
+\newcommand{\SetParticipantSix}[3]{%
+    \renewcommand{\ParticipantSixName}{#1}%
+    \renewcommand{\ParticipantSixId}{#2}%
+    \renewcommand{\ParticipantSixEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 7.
+% Beispiel: \SetParticipantSeven{Siebte Person}{555555}{siebte@example.de}
+\newcommand{\SetParticipantSeven}[3]{%
+    \renewcommand{\ParticipantSevenName}{#1}%
+    \renewcommand{\ParticipantSevenId}{#2}%
+    \renewcommand{\ParticipantSevenEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 8.
+% Beispiel: \SetParticipantEight{Achte Person}{666666}{achte@example.de}
+\newcommand{\SetParticipantEight}[3]{%
+    \renewcommand{\ParticipantEightName}{#1}%
+    \renewcommand{\ParticipantEightId}{#2}%
+    \renewcommand{\ParticipantEightEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 9.
+% Beispiel: \SetParticipantNine{Neunte Person}{777777}{neunte@example.de}
+\newcommand{\SetParticipantNine}[3]{%
+    \renewcommand{\ParticipantNineName}{#1}%
+    \renewcommand{\ParticipantNineId}{#2}%
+    \renewcommand{\ParticipantNineEmail}{#3}%
+}
+% TEILNEHMENDE: Setzt Name, Matrikelnummer und E-Mail fuer Person 10.
+% Beispiel: \SetParticipantTen{Zehnte Person}{888888}{zehnte@example.de}
+\newcommand{\SetParticipantTen}[3]{%
+    \renewcommand{\ParticipantTenName}{#1}%
+    \renewcommand{\ParticipantTenId}{#2}%
+    \renewcommand{\ParticipantTenEmail}{#3}%
+}
+% DOKUMENT-BASISDATEN: Setzt Titel, Untertitel und Versuch/Einheit.
+% Beispiel: \SetDocumentBasics{Labor 1}{Messtechnik}{Versuch 1}
+\newcommand{\SetDocumentBasics}[3]{%
+    \renewcommand{\DocumentTitle}{#1}%
+    \renewcommand{\DocumentSubtitle}{#2}%
+    \renewcommand{\DocumentUnit}{#3}%
+}
+% DOKUMENT-KONTEXT: Setzt Institution, Fachbereich, Kurs, Semester, Betreuung und Abgabe.
+% Beispiel: \SetDocumentContext{HAW Kiel}{IuE}{Regelungstechnik}{SoSe 2026}{Prof. Name}{\today}
+\newcommand{\SetDocumentContext}[6]{%
+    \renewcommand{\InstitutionName}{#1}%
+    \renewcommand{\DepartmentName}{#2}%
+    \renewcommand{\CourseName}{#3}%
+    \renewcommand{\TermName}{#4}%
+    \renewcommand{\InstructorName}{#5}%
+    \renewcommand{\SubmissionDate}{#6}%
+}
+
+
+
+\newcommand{\ResolvedDocumentShortTitle}{\ifdefempty{\DocumentShortTitle}{\DocumentTitle}{\DocumentShortTitle}}
+\newcommand{\ResolvedDocumentFooterLabel}{\ifdefempty{\DocumentFooterLabel}{\CourseName}{\DocumentFooterLabel}}
+
+\newcommand{\NameSeparator}{}
+\newcommand{\AppendParticipantName}[1]{%
+    \ifdefempty{#1}{}{%
+        \NameSeparator#1%
+        \renewcommand{\NameSeparator}{, }%
+    }%
+}
+\newcommand{\ParticipantNames}{%
+    \begingroup
+    \renewcommand{\NameSeparator}{}%
+    \AppendParticipantName{\ParticipantOneName}%
+    \AppendParticipantName{\ParticipantTwoName}%
+    \AppendParticipantName{\ParticipantThreeName}%
+    \AppendParticipantName{\ParticipantFourName}%
+    \AppendParticipantName{\ParticipantFiveName}%
+    \AppendParticipantName{\ParticipantSixName}%
+    \AppendParticipantName{\ParticipantSevenName}%
+    \AppendParticipantName{\ParticipantEightName}%
+    \AppendParticipantName{\ParticipantNineName}%
+    \AppendParticipantName{\ParticipantTenName}%
+    \endgroup
+}
+\newcommand{\FooterParticipantNames}{\ParticipantNames}
+
+% ---------------------------------------------------------------------------
+% 6) Kopf- und Fusszeilen
+% ---------------------------------------------------------------------------
+\newcommand{\HeaderLeftText}{\ResolvedDocumentShortTitle}
+\newcommand{\HeaderCenterText}{}
+\newcommand{\HeaderRightText}{\pagemark}
+\newcommand{\FooterLeftText}{\FooterParticipantNames}
+\newcommand{\FooterCenterText}{}
+\newcommand{\FooterRightText}{Seite \thepage\ von \pageref{LastPage}}
+
+% KOPFZEILE: Setzt linken, mittleren und rechten Inhalt der Kopfzeile.
+% Beispiel: \SetHeader{Kurztitel}{Projekt}{\pagemark}
+\newcommand{\SetHeader}[3]{%
+    \renewcommand{\HeaderLeftText}{#1}%
+    \renewcommand{\HeaderCenterText}{#2}%
+    \renewcommand{\HeaderRightText}{#3}%
+}
+% FUSSZEILE: Setzt linken, mittleren und rechten Inhalt der Fusszeile.
+% Beispiel: \SetFooter{Autor:innen}{}{Seite \thepage\ von \pageref{LastPage}}
+\newcommand{\SetFooter}[3]{%
+    \renewcommand{\FooterLeftText}{#1}%
+    \renewcommand{\FooterCenterText}{#2}%
+    \renewcommand{\FooterRightText}{#3}%
+}
+% EINFACHE KOPFZEILE: Titel links, Seitenzahl rechts.
+% Beispiel: \SetSimpleHeader{Regelungstechnik}
+\newcommand{\SetSimpleHeader}[1]{\SetHeader{#1}{}{\pagemark}}
+% EINFACHE FUSSZEILE: Autor:innen links, Text mittig, Seitenzahl rechts.
+% Beispiel: \SetSimpleFooter{Max, Erika}{Laborbericht}
+\newcommand{\SetSimpleFooter}[2]{\SetFooter{#1}{#2}{Seite \thepage\ von \pageref{LastPage}}}
+
+\clearpairofpagestyles
+\KOMAoptions{headsepline=.4pt,footsepline=.4pt}
+\setkomafont{pagehead}{\normalfont\small\sffamily}
+\setkomafont{pagefoot}{\normalfont\small\sffamily}
+\setkomafont{pagenumber}{\normalfont\small\sffamily}
+\ihead*{\HeaderLeftText}
+\chead*{\HeaderCenterText}
+\ohead*{\HeaderRightText}
+\ifoot*{\FooterLeftText}
+\cfoot*{\FooterCenterText}
+\ofoot*{\FooterRightText}
+\renewcommand*{\chapterpagestyle}{scrheadings}
+\pagestyle{scrheadings}
+
+% ---------------------------------------------------------------------------
+% 7) Layout, Titelseite und Kapitelstil
+% ---------------------------------------------------------------------------
+\RequirePackage[
+    a4paper,
+    left=15mm,
+    right=15mm,
+    top=12mm,
+    bottom=18mm,
+    includehead,
+    includefoot
+]{geometry}
+\setlength{\headheight}{18pt}
+\setlength{\headsep}{4mm}
+\setlength{\footskip}{9mm}
+\raggedbottom
+\emergencystretch=2em
+
+% Die Seitenraender koennen in der Hauptdatei gesetzt werden.
+% Reihenfolge: links, rechts, oben, unten.
+% SEITENRAENDER: Setzt links, rechts, oben und unten in dieser Reihenfolge.
+% Beispiel: \SetPageMargins{10mm}{10mm}{5mm}{5mm}
+\NewDocumentCommand{\SetPageMargins}{mmmm}{%
+    \geometry{left=#1,right=#2,top=#3,bottom=#4,includehead,includefoot}%
+}
+
+% HAUPTTEIL: Startet die arabische Seitennummerierung bei Seite 1.
+% Beispiel: \StartMainMatter
+\newcommand{\StartMainMatter}{%
+    \clearpage%
+    \begingroup%
+    \hypersetup{pageanchor=false}%
+    \pagenumbering{arabic}%
+    \setcounter{page}{1}%
+    \endgroup%
+    \hypersetup{pageanchor=true}%
+}
+
+\newcommand{\SafeHrefMail}[1]{\ifdefempty{#1}{}{\href{mailto:#1}{\nolinkurl{#1}}}}
+\newcommand{\LabMetaLine}[2]{{\bfseries #1:}~#2\\[0.35em]}
+\newcommand{\ParticipantRow}[3]{\ifdefempty{#1}{}{#1 & #2 & {\footnotesize\SafeHrefMail{#3}}\\}}
+\newcommand{\ParticipantRows}{%
+    \ParticipantRow{\ParticipantOneName}{\ParticipantOneId}{\ParticipantOneEmail}%
+    \ParticipantRow{\ParticipantTwoName}{\ParticipantTwoId}{\ParticipantTwoEmail}%
+    \ParticipantRow{\ParticipantThreeName}{\ParticipantThreeId}{\ParticipantThreeEmail}%
+    \ParticipantRow{\ParticipantFourName}{\ParticipantFourId}{\ParticipantFourEmail}%
+    \ParticipantRow{\ParticipantFiveName}{\ParticipantFiveId}{\ParticipantFiveEmail}%
+    \ParticipantRow{\ParticipantSixName}{\ParticipantSixId}{\ParticipantSixEmail}%
+    \ParticipantRow{\ParticipantSevenName}{\ParticipantSevenId}{\ParticipantSevenEmail}%
+    \ParticipantRow{\ParticipantEightName}{\ParticipantEightId}{\ParticipantEightEmail}%
+    \ParticipantRow{\ParticipantNineName}{\ParticipantNineId}{\ParticipantNineEmail}%
+    \ParticipantRow{\ParticipantTenName}{\ParticipantTenId}{\ParticipantTenEmail}%
+}
+\newcommand{\LabPeopleTable}{%
+        {\small
+    \begin{tabularx}{\linewidth}{@{}>{\bfseries}P{0.39\linewidth}P{0.17\linewidth}X@{}}
+    Name & Matr.-Nr. & E-Mail\\
+    \midrule
+    \ParticipantRows
+    \end{tabularx}}%
+}
+\newcommand{\LabMetadataBlock}{%
+    \begin{UnifiedSoftBox}
+    {\sffamily\bfseries\color{ModulePrimary}Rahmendaten}\par\vspace{0.5em}
+    \ifdefempty{\InstitutionName}{}{\LabMetaLine{Institution}{\InstitutionName}}
+    \ifdefempty{\DepartmentName}{}{\LabMetaLine{Fachbereich}{\DepartmentName}}
+    \ifdefempty{\CourseName}{}{\LabMetaLine{Modul / Kurs}{\CourseName}}
+    \ifdefempty{\TermName}{}{\LabMetaLine{Semester}{\TermName}}
+    \ifdefempty{\GroupName}{}{\LabMetaLine{Gruppe}{\GroupName}}
+    \ifdefempty{\InstructorName}{}{\LabMetaLine{Dozent:in}{\InstructorName}}
+    \ifdefempty{\SubmissionDate}{}{\LabMetaLine{Abgabe}{\SubmissionDate}}
+    \end{UnifiedSoftBox}%
+}
+\newcommand{\LabParticipantsBlock}{%
+    \begin{UnifiedSoftBox}
+    {\sffamily\bfseries\color{ModulePrimary}Bearbeiter:innen}\par\vspace{0.5em}
+    \LabPeopleTable
+    \end{UnifiedSoftBox}%
+}
+\newcommand{\MaybeLogo}{%
+    \ifdefempty{\DocumentLogoPath}{}{%
+        \IfFileExists{\DocumentLogoPath}{%
+        % Die beiden gegenlaeufigen horizontalen Abstaende verschieben
+        % das Bild, ohne seine fuer das Layout reservierte Breite zu aendern.
+            \hspace*{\DocumentLogoXOffset}%
+            \raisebox{\DocumentLogoYOffset}{%
+                \includegraphics[width=\DocumentLogoWidth]{\DocumentLogoPath}%
+            }%
+            \hspace*{-\DocumentLogoXOffset}%
+        }{}%
+    }%
+}
+% TITELSEITE: Erzeugt die Titelseite aus den zuvor gesetzten Dokumentdaten.
+% Beispiel: \MakeDocumentTitle
+\newcommand{\MakeDocumentTitle}{%
+    \begin{titlepage}
+    \thispagestyle{empty}
+    \sffamily
+    \noindent {\large \ResolvedDocumentShortTitle\par}
+    \vspace{0.2em}\hrule height 0.4pt\vspace*{1.1cm}
+    \noindent
+    \begin{minipage}[t]{0.66\textwidth}
+    {\color{ModulePrimary}\bfseries\fontsize{18}{22}\selectfont \DocumentType\par}
+    \vspace{0.55cm}
+    {\color{ModulePrimary}\bfseries\fontsize{28}{34}\selectfont \DocumentTitle\par}
+    \ifdefempty{\DocumentSubtitle}{}{\vspace{0.25cm}{\Large \DocumentSubtitle\par}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.30\textwidth}
+    \raggedleft\vspace{0.15cm}\MaybeLogo
+    \end{minipage}\par
+    \vspace{0.95cm}
+    \ifdefempty{\DocumentUnit}{}{\PrimaryBand{\textbf{Versuch / Einheit:} \DocumentUnit}}
+    \ifdefempty{\DocumentTopic}{}{\vspace{0.25cm}\SecondaryBand{\textbf{Thema:} \DocumentTopic}}
+    \ifdefempty{\DocumentDescription}{}{\vspace{0.45cm}\begin{UnifiedInfoBox}\DocumentDescription\end{UnifiedInfoBox}}
+    \vspace{0.8cm}
+    \noindent
+    \begin{minipage}[t]{0.53\textwidth}\LabMetadataBlock\end{minipage}\hfill
+    \begin{minipage}[t]{0.43\textwidth}\LabParticipantsBlock\end{minipage}
+    \vfill
+    \color{ModuleSecondary}\rule{\textwidth}{1.2pt}\vspace{0.35cm}
+    \noindent\small
+    \InstitutionName\ifdefempty{\CourseName}{}{\\\CourseName}\ifdefempty{\DepartmentName}{}{\\\DepartmentName}
+    \end{titlepage}
+    \clearpage
+}
+
+\setkomafont{disposition}{\sffamily\bfseries\color{ModulePrimary}}
+\addtokomafont{chapter}{\Huge}
+\addtokomafont{section}{\LARGE}
+\addtokomafont{subsection}{\Large}
+\addtokomafont{subsubsection}{\large}
+\renewcommand*{\chapterformat}{\thechapter\enskip}
+\makeatletter
+\@ifclassloaded{scrreprt}{%
+    \RedeclareSectionCommand[beforeskip=-20pt plus -6pt minus -4pt, afterskip=12pt]{chapter}%
+}{}
+\makeatother
+
+% ---------------------------------------------------------------------------
+% 8) Boxen, Bänder und Strukturbausteine
+% ---------------------------------------------------------------------------
+% THEMENBALKEN: Erzeugt einen farbigen Balken mit frei waehlbarer Farbe.
+% Beispiel: \ThemeBar{ModulePrimaryLight}{Zwischenergebnis}
+\newcommand{\ThemeBar}[2]{%
+    \noindent
+    \colorbox{#1}{%
+        \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+            \vspace{0.03cm}\normalsize #2\vspace{0.03cm}%
+        }%
+    }\par\vspace{0.10cm}%
+}
+% PRIMAERBALKEN: Themenbalken in der primaeren Sekundaerfarbe.
+% Beispiel: \PrimaryBand{Versuchsauswertung}
+\newcommand{\PrimaryBand}[1]{\ThemeBar{ModuleSecondary}{#1}}
+% SEKUNDAERBALKEN: Themenbalken in heller Primaerfarbe.
+% Beispiel: \SecondaryBand{Messaufbau}
+\newcommand{\SecondaryBand}[1]{\ThemeBar{ModulePrimaryLight}{#1}}
+
+% INFOBOX-UMGEBUNG: Warm hinterlegte, umbrechbare Box fuer laengere Hinweise.
+% Beispiel: \begin{UnifiedInfoBox}Hinweistext\end{UnifiedInfoBox}
+\newenvironment{UnifiedInfoBox}{%
+    \begin{tcolorbox}[
+        enhanced,
+        breakable,
+        colback=ModuleAccentWarm,
+        colframe=black!45,
+        boxrule=0.45pt,
+        left=3mm,right=3mm,top=2mm,bottom=2mm,
+        arc=0pt,
+        before skip=4pt,
+        after skip=4pt
+    ]
+}{\end{tcolorbox}}
+% SOFTBOX-UMGEBUNG: Dezente weisse, umbrechbare Box fuer Zusatzinformationen.
+% Beispiel: \begin{UnifiedSoftBox}Zusatztext\end{UnifiedSoftBox}
+\newenvironment{UnifiedSoftBox}{%
+    \begin{tcolorbox}[
+        enhanced,
+        breakable,
+        colback=white,
+        colframe=black!40,
+        boxrule=0.45pt,
+        left=3mm,right=3mm,top=2mm,bottom=2mm,
+        arc=0pt,
+        before skip=4pt,
+        after skip=4pt
+    ]
+}{\end{tcolorbox}}
+% FORMELBOX-UMGEBUNG: Dezente Box fuer Formeln und zugehoerige Erlaeuterungen.
+% Beispiel: \begin{UnifiedFormulaBox}Formel und Erklaerung\end{UnifiedFormulaBox}
+\newenvironment{UnifiedFormulaBox}{%
+    \begin{tcolorbox}[
+        enhanced,
+        breakable,
+        colback=ModuleFormulaBackground,
+        colframe=black!28,
+        boxrule=0.45pt,
+        left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,
+        arc=0pt,
+        before skip=4pt,
+        after skip=4pt
+    ]
+}{\end{tcolorbox}}
+
+% INFOBOX: Kurzform fuer eine UnifiedSoftBox.
+% Beispiel: \InfoBox{Dieser Abschnitt beschreibt die Messmethode.}
+\newcommand{\InfoBox}[1]{\begin{UnifiedSoftBox}#1\end{UnifiedSoftBox}}
+% HINWEISBOX: Warm hinterlegte Box mit vorangestelltem Hinweis-Label.
+% Beispiel: \HintBox{Vor dem Kompilieren Biber ausfuehren.}
+\newcommand{\HintBox}[1]{\begin{UnifiedInfoBox}\textbf{Hinweis:}~#1\end{UnifiedInfoBox}}
+% DEFINITIONSBOX: Kompakte Box fuer Definitionen.
+% Beispiel: \DefinitionBox{Eine Sprungantwort beschreibt ...}
+\newcommand{\DefinitionBox}[1]{%
+    \noindent
+    \fcolorbox{black}{ModuleAccentWarm}{%
+        \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+            \small\vspace{0.10cm}#1\vspace{0.08cm}%
+        }%
+    }\par\vspace{0.08cm}%
+}
+
+% ZWISCHENUEBERSCHRIFT: Kleine farbige Abschnittszeile ohne Nummerierung.
+% Beispiel: \SectionLine{Messwerte}
+\newcommand{\SectionLine}[1]{{\color{ModulePrimary}\bfseries\fontsize{11.5}{14.0}\selectfont #1\par}\vspace{0.22cm}}
+% ZWISCHENUEBERSCHRIFT: Kleinere farbige Unterabschnittszeile ohne Nummerierung.
+% Beispiel: \SubsectionLine{Messwerte}
+\newcommand{\SubsectionLine}[1]{{\color{ModulePrimary}\bfseries\fontsize{10.2}{11.8}\selectfont #1\par}\vspace{0.09cm}}
+% ZWISCHENUEBERSCHRIFT: Kleine farbige Unterunterabschnittszeile ohne Nummerierung.
+% Beispiel: \SubsubsectionLine{Messwerte}
+\newcommand{\SubsubsectionLine}[1]{{\color{ModulePrimary}\bfseries\fontsize{8.2}{9.8}\selectfont #1\par}\vspace{0.20cm}}
+
+% BOXED SECTION: Abschnittsueberschrift als Balken; Sternform ohne Nummer.
+% Beispiel: \BoxedSection{Auswertung} bzw. \BoxedSection*{Kurzfassung}
+\NewDocumentCommand{\BoxedSection}{s m}{%
+    \IfBooleanTF{#1}{%
+        \addcontentsline{toc}{section}{#2}%
+        \ThemeBar{ModuleSecondary}{#2}%
+    }{%
+        \refstepcounter{section}%
+        \addcontentsline{toc}{section}{\protect\numberline{\thesection}#2}%
+        \ThemeBar{ModuleSecondary}{\thesection\quad #2}%
+    }%
+    \vspace{-0.3em}%
+}
+% BOXED SUBSECTION: Unterabschnittsueberschrift als Balken; Sternform ohne Nummer.
+% Beispiel: \BoxedSubsection{Messwerte}
+\NewDocumentCommand{\BoxedSubsection}{s m}{%
+    \IfBooleanTF{#1}{%
+        \addcontentsline{toc}{subsection}{#2}%
+        \ThemeBar{ModuleSecondary}{#2}%
+    }{%
+        \refstepcounter{subsection}%
+        \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#2}%
+        \ThemeBar{ModuleSecondary}{\thesubsection\quad #2}%
+    }%
+    \vspace{-0.3em}%
+}
+% BOXED SUBSUBSECTION: Unterunterabschnitt als Balken; Sternform ohne Nummer.
+% Beispiel: \BoxedSubsubsection{Details}
+\NewDocumentCommand{\BoxedSubsubsection}{s m}{%
+    \IfBooleanTF{#1}{%
+        \addcontentsline{toc}{subsubsection}{#2}%
+        \ThemeBar{ModuleSecondary}{#2}%
+    }{%
+        \refstepcounter{subsubsection}%
+        \addcontentsline{toc}{subsubsection}{\protect\numberline{\thesubsubsection}#2}%
+        \ThemeBar{ModuleSecondary}{\thesubsubsection\quad #2}%
+    }%
+    \vspace{-0.3em}%
+}
+% BOXED PARAGRAPH: Absatzueberschrift als Balken; Sternform ohne Nummer.
+% Beispiel: \BoxedParagraph{Hinweise}
+\NewDocumentCommand{\BoxedParagraph}{s m}{%
+    \IfBooleanTF{#1}{\ThemeBar{ModulePrimaryLight}{#2}}{%
+        \refstepcounter{paragraph}%
+        \ThemeBar{ModulePrimaryLight}{\theparagraph\quad #2}%
+    }%
+    \vspace{-0.3em}%
+}
+
+% AUFGABENABSCHNITT: Erzeugt eine Aufgabenueberschrift mit fortlaufendem Abschnittszaehler.
+% Beispiel: \TaskSection
+\newcommand{\TaskSection}{%
+    \refstepcounter{section}%
+    \subsection*{Aufgabe \thesection}%
+    \addcontentsline{toc}{section}{Aufgabe \thesection}%
+}
+% LOESUNGSBALKEN: Markiert einen Loesungsabschnitt.
+% Beispiel: \SolutionBar
+\newcommand{\SolutionBar}{\ThemeBar{ModuleSecondary}{Lösung}}
+% ANALYSEBALKEN: Markiert einen Analyseabschnitt mit frei waehlbarem Titel.
+% Beispiel: \AnalysisBar{Interpretation der Messkurve}
+\newcommand{\AnalysisBar}[1]{\ThemeBar{ModulePrimaryLight}{#1}}
+% QUELLEN-LISTENPUNKT: Listenpunkt mit sauberem Flattersatz.
+% Beispiel: \sourceitem{Datenblatt des Sensors}
+\newcommand{\sourceitem}[1]{\item \raggedright #1}
+% CO2-KURZBEFEHL: Typografische CO2-Darstellung mit PDF-Lesezeichen-Kompatibilitaet.
+% Beispiel: Der \COzwei-Ausstoß wird betrachtet.
+\newcommand{\COzwei}{\texorpdfstring{CO$}{CO2}}
+% SPRUNGSIGNAL: Zeichnet ein kleines Symbol fuer ein Sprungsignal.
+% Beispiel: Eingangssignal \sprungsignal
+\newcommand{\sprungsignal}{%
+    \raisebox{-0.1ex}{\tikz[scale=0.35]{\draw (-0.8,0) -- (0,0) -- (0,0.8) -- (0.8,0.8);}}%
+}
+% SKIZZENTABELLE: Tabellenzelle mit optionalem Bild und Beschriftung.
+% Beispiel: \sketchcell{aufbau}{Versuchsaufbau}
+\newcommand{\sketchcell}[2]{%
+    \begin{minipage}[t]{\linewidth}\centering
+    \begingroup
+    \if\relax\detokenize{#1}\relax
+    \vspace*{1.6cm}%
+    \else
+    \adjustbox{max width=\linewidth, max height=2.0cm}{\includegraphics{#1}}\\[-0.2em]%
+    \fi
+    \endgroup
+    \footnotesize #2
+    \end{minipage}%
+}
+
+% ---------------------------------------------------------------------------
+% 9) Mathematik, Theoreme und Gleichungsverzeichnis
+% ---------------------------------------------------------------------------
+\makeatletter
+\@ifundefined{chapter}{%
+    \numberwithin{equation}{section}
+    \newtheorem{satz}{Satz}[section]
+}{%
+    \numberwithin{equation}{chapter}
+    \newtheorem{satz}{Satz}[chapter]
+}
+\makeatother
+\newtheorem{lemma}[satz]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[satz]{Definition}
+\theoremstyle{remark}
+\newtheorem{bemerkung}[satz]{Bemerkung}
+
+% MATHE-KURZBEFEHLE: Mengen und Operatoren fuer mathematische Texte.
+% Beispiel: x\in\R, \Var(X), a\defeq b
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\defeq}{\mathrel{\stackrel{!}{=}}}
+
+\DeclareNewTOC[
+    owner=main,
+    type=eqn,
+    types=equations,
+    name={Gleichung},
+    listname={Gleichungsverzeichnis}
+]{loe}
+% GLEICHUNGSVERZEICHNIS: Gibt das automatisch erzeugte Gleichungsverzeichnis aus.
+% Beispiel: \listequations
+\newcommand{\listequations}{\listofequations}
+
+\makeatletter
+\newcommand{\@eqcaptionShort}{}
+\newcommand{\@eqcaptionLong}{}
+% GLEICHUNGSBESCHRIFTUNG: Fuegt eine equation in das Gleichungsverzeichnis ein.
+% Beispiel: \begin{equation}E=mc^2\eqcaption[Einstein]{Masse-Energie-Aequivalenz}\end{equation}
+\NewDocumentCommand{\eqcaption}{O{} m}{%
+    \gdef\@eqcaptionShort{#1}%
+    \gdef\@eqcaptionLong{#2}%
+}
+\AtBeginEnvironment{equation}{%
+    \gdef\@eqcaptionShort{}%
+    \gdef\@eqcaptionLong{}%
+}
+\AtEndEnvironment{equation}{%
+    \begingroup
+    \edef\@tmpShort{\@eqcaptionShort}%
+    \edef\@tmpLong{\@eqcaptionLong}%
+    \ifx\@tmpShort\@empty
+    \ifx\@tmpLong\@empty
+    \else
+    \phantomsection
+    \addcontentsline{loe}{eqn}{\protect\numberline{\theequation}\@eqcaptionLong}%
+    \fi
+    \else
+    \phantomsection
+    \addcontentsline{loe}{eqn}{\protect\numberline{\theequation}\@eqcaptionShort}%
+    \fi
+    \endgroup
+}
+\makeatother
+
+% ---------------------------------------------------------------------------
+% 10) Projektmanagement-Geruestbausteine
+% ---------------------------------------------------------------------------
+% Diese Befehle bilden nur die Struktur der Projektdokumentation ab. Sie
+% enthalten bewusst keine fachlichen Projektinhalte.
+
+% Sichtbarer Platzhalter fuer spaetere Diagramme, Matrizen und Ablaufplaene.
+% STRUKTUR-PLATZHALTER: Sichtbarer Platzhalter fuer spaetere Grafiken oder Plaene.
+% Beispiel: \StructurePlaceholder[60mm]{Risikomatrix}
+\NewDocumentCommand{\StructurePlaceholder}{O{45mm} m}{%
+    \begin{figure}[H]
+    \centering
+    \fbox{%
+        \begin{minipage}[c][#1][c]{0.90\textwidth}
+        \centering\itshape [#2]
+        \end{minipage}%
+    }
+    \caption{#2}
+    \end{figure}%
+}
+
+% Leere Tabellenzeilen mit definierter Mindesthoehe.
+% LEERE TABELLENZEILE: Platzhalterzeile mit definierter Mindesthoehe.
+% Beispiel: \BlankTableRow
+\newcommand{\BlankTableRow}{\rule{0pt}{3.2em} & & & \\}
+% LEERE RISIKOZEILE: Platzhalterzeile fuer Risikotabellen.
+% Beispiel: \BlankRiskRow
+\newcommand{\BlankRiskRow}{\rule{0pt}{4.8em} & & & & & \\}
+% LEERE PHASENZEILE: Platzhalterzeile fuer Phasentabellen.
+% Beispiel: \BlankPhaseRow
+\newcommand{\BlankPhaseRow}{\rule{0pt}{3.8em} & & & \\}
+
+
+% Farbiger Balken fuer einen Phasenplan.
+% Verwendung: \ProjectPhaseBar[Farbe]{Bezeichnung}{Startspalte}{Endspalte}
+% PHASENBALKEN: Erzeugt einen farbigen Balken im Gantt-Diagramm.
+% Beispiel: \ProjectPhaseBar[PhaseBuild]{Instandsetzung}{3}{5}
+\NewDocumentCommand{\ProjectPhaseBar}{O{ModulePrimary} m m m}{%
+    \ganttbar[
+        bar/.append style={fill=#1,draw=none},
+        bar label node/.append style={fill=#1!22,draw=none}
+    ]{#2}{#3}{#4}%
+}
+
+% Schluessel fuer individuell ausfuellbare Arbeitspakete.
+% Werte mit Kommas immer in geschweifte Klammern setzen.
+\pgfkeys{
+    /workpackage/.is family,
+    /workpackage,
+    titel/.store in         = \WPTitel,
+    psp/.store in           = \WPPSP,
+    teilprojekt/.store in   = \WPTeilprojekt,
+    datum/.store in         = \WPDatum,
+    verantwortlich/.store in= \WPVerantwortlich,
+    start/.store in         = \WPStart,
+    ende/.store in          = \WPEnde,
+    ziele/.store in         = \WPZiele,
+    voraussetzungen/.store in=\WPVoraussetzungen,
+    ergebnisse/.store in    = \WPErgebnisse,
+    schnittstellen/.store in= \WPSchnittstellen,
+    aktivitaeten/.store in  = \WPAktivitaeten,
+    aufwand/.store in       = \WPAufwand
+}
+
+% Fuehrende und abschliessende Leerzeichen im optionalen Schluesselblock entfernen.
+% Dadurch darf der Block uebersichtlich ueber mehrere Zeilen geschrieben werden.
+\ExplSyntaxOn
+\tl_new:N \l_workpackage_options_tl
+\cs_new_protected:Npn \WorkPackageSetOptions #1
+    {
+    \tl_set:Nn \l_workpackage_options_tl {#1}
+    \tl_trim_spaces:N \l_workpackage_options_tl
+    \tl_put_left:Nn \l_workpackage_options_tl {/workpackage/.cd,}
+    \exp_args:NV \pgfkeys \l_workpackage_options_tl
+}
+\ExplSyntaxOff
+
+% Formular fuer ein detailliertes Arbeitspaket.
+% Verwendung: \WorkPackageForm[titel={...},datum={...},...]{AP1}
+% ARBEITSPAKET-FORMULAR: Erzeugt ein ausfuellbares Arbeitspaket aus Schluessel-Wert-Paaren.
+% Beispiel: \WorkPackageForm[titel={Planung},datum={12.07.2026}]{AP1}
+\NewDocumentCommand{\WorkPackageForm}{O{} m}{%
+    \begingroup
+    \pgfkeys{
+        /workpackage/.cd,
+        titel=,
+        psp=,
+        teilprojekt=,
+        datum=,
+        verantwortlich=,
+        start=,
+        ende=,
+        ziele=,
+        voraussetzungen=,
+        ergebnisse=,
+        schnittstellen=,
+        aktivitaeten=,
+        aufwand=
+    }%
+    \WorkPackageSetOptions{#1}%
+    \section{Arbeitspaket #2}
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{|P{0.20\textwidth}|Y|P{0.14\textwidth}|P{0.18\textwidth}|}
+    \hline
+    \multicolumn{4}{|l|}{\bfseries ARBEITSPAKET-BESCHREIBUNG #2} \\
+    \hline
+    \textbf{AP-Titel:} & \WPTitel & \textbf{PSP-Nr.:} & \WPPSP \\
+    \hline
+    \textbf{Teilprojekt / TPL:} & \WPTeilprojekt & \textbf{Datum:} & \WPDatum \\
+    \hline
+    \textbf{Verantwortlich:} & \WPVerantwortlich & \textbf{Start:} & \WPStart \\
+    \hline
+    \textbf{Ende:} & \multicolumn{3}{l|}{\WPEnde} \\
+    \hline
+    \end{tabularx}
+
+    \vspace{0.35em}
+
+    \begin{tabularx}{\textwidth}{|Y|Y|}
+    \hline
+    \textbf{Ziele- / Leistungsbeschreibung:} & \textbf{Voraussetzungen (Input):} \\
+    \rule{0pt}{8em}\WPZiele & \rule{0pt}{8em}\WPVoraussetzungen \\
+    \hline
+    \textbf{Ergebnisse / Ergebniserwartung (SMART+):} & \textbf{Schnittstellen:} \\
+    \rule{0pt}{8em}\WPErgebnisse & \rule{0pt}{8em}\WPSchnittstellen \\
+    \hline
+    \textbf{Aktivitaeten / Termine:} & \textbf{Aufwand (Ressourcen):} \\
+    \rule{0pt}{8em}\WPAktivitaeten & \rule{0pt}{8em}\WPAufwand \\
+    \hline
+    \end{tabularx}
+    \endgroup
+    \clearpage
+}
+
+% MATERIALNUMMERIERUNG: Automatische IDs M01, M02, M03 usw.
+% Beispiel: Vor der Tabelle \ResetMaterialCounter, je Datenzeile \MaterialID
+\newcounter{materialnummer}
+
+\newcommand{\MaterialID}{%
+    \stepcounter{materialnummer}%
+    \textbf{M\ifnum\value{materialnummer}<10 0\fi%
+    \arabic{materialnummer}}%
+}
+
+\newcounter{MeilensteinID}
+\newcommand{\MS}{%
+    \refstepcounter{MeilensteinID}%
+    \textbf{M\arabic{MeilensteinID}}%
+}
+
+
+\newcommand{\ResetMaterialCounter}{%
+    \setcounter{materialnummer}{0}%
+}
+
+% TEILPROJEKT- UND TEILAUFGABENNUMMERIERUNG
+% Erzeugt TP 1, TP 2 sowie TA 1.1, TA 1.2, TA 2.1 usw.
+
+\newcounter{teilprojekt}
+
+% Der Teilaufgabenzähler wird bei jedem neuen Teilprojekt zurückgesetzt.
+\newcounter{teilaufgabe}[teilprojekt]
+
+\newcommand{\TeilprojektID}{%
+    \stepcounter{teilprojekt}%
+    \textbf{TP~\arabic{teilprojekt}}%
+}
+
+\newcommand{\TeilaufgabeID}{%
+    \stepcounter{teilaufgabe}%
+    TA~\arabic{teilprojekt}.\arabic{teilaufgabe}%
+}
+
+\newcommand{\ResetTeilstrukturCounter}{%
+    \setcounter{teilprojekt}{0}%
+    \setcounter{teilaufgabe}{0}%
+}
+
+% ================================
+% Projekttagebuch
+% ================================
+
+% Zähler für Tagebucheinträge
+\newcounter{PTEntry}
+
+\newcommand{\PTID}{%
+    \stepcounter{PTEntry}%
+    \textbf{PT-\ifnum\value{PTEntry}<10 00%
+    \else\ifnum\value{PTEntry}<100 0%
+    \fi\fi\arabic{PTEntry}}%
+}
+
+
+
+% ============================================================================
+% Ende settings.sty
+% ============================================================================
