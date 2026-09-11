@@ -1,1 +1,441 @@
 \chapter{Technischer Ist-Zustand}\label{ch:technischer-ist-zustand}
+
+\section{Vorbereitung}\label{sec:vorbereitung}
+Zur Vorbereitung der Erfassung des Technischen-ist-zustandes wurden überlegungen angestellt, wie sich der Prozess des Zuordnens einer ID, sowie relevanten Informationen sowie einem Bild, falls nötig, möglichst strukturiert und übersichtlich darstelen lässt.
+Ebenfalls relevent hier war es, dass die Daten möglichst leicht in eine \LaTeX-Tabelle überführt werden können.
+Hier wurden drei mögliche Konzepte, die zur effizienten aufnahme der Daten in Betracht gezogen wurden.
+
+Für die Excel-Datei, die Web-App und die APK wurde Generative KI eingesetzt.
+Diese hat lediglich ein Großteil des Programmcodes, sowie das Hosting der Web-App übernommen.
+Ebenfalls wurden Formulierungen angepasst und Texte auf Gramatik und Rechtschreibung überprüft.
+Alle bewertenden Elemente, sowie die Begründung wurde durch ein Gruppenmitglied erstellt und nach überarbeitung und umformulierung auf den vorgegebenen Inhalt überprüft.
+Alle Entscheidungen wurden ebenfalls aufgrund der eigenen Bewertungsmatrix getroffen.
+
+Die Excel-Datei bietet eine einfache Einrichtung, eine zuverlässige Offline-Nutzung und einen unkomplizierten Datenexport.
+Die Bedienung auf einem Tablet ist aufgrund des Touchsystems allerdings sehr unzuverlässig, da man sich schnell mal vertippt, bzw was Falsches auswählen kann.
+Außerdem lassen sich komplexe Verbindungen zwischen Bauteilen und zugehörige Fotos nur eingeschränkt übersichtlich erfassen.
+Hinzu kommt, dass es für Mobile Endgeräte nur die Office 365 Version von Excel gibt, welche auf Android geräten in ihren Funktionen stark beschränkt ist
+
+Die Web-App ist auf die konkrete Erfassungsaufgabe zugeschnitten und bietet automatische IDs, getrennte Ansichten für Bauteile und Verbindungen sowie große, für Touchscreens geeignete Eingabeelemente.
+Ihre Schwächen liegen in der Abhängigkeit vom Browser, der lokalen Speicherung und dem nicht auf jedem Gerät gleichermaßen zuverlässigen Offlinebetrieb.
+Ebenfalls zu beachten ist hier, dass man jene erst erstellen muss, welches ein gewisses Grundverständnis von Programmierung mit gezielter nutzung von KI erfordert.
+
+Die APK übernimmt die aufgabenbezogene Bedienoberfläche der Web-App und stellt sie als eigenständige Android-Anwendung bereit.
+Sie ermöglicht eine zuverlässige Offline-Nutzung und einen direkten Zugriff auf Gerätefunktionen.
+Außerdem kann so eine Umgebung geschaffen werden, die die exakten Bedingungen für das hier geplante vorgehen bereitstellt.
+Dem stehen ein höherer Aufwand bei der erstmaligen Erstellung gegenüber.
+Aufgrund der hohen Bedienbarkeit und der guten Eignung für die mobile Datenerfassung wurde die APK als bevorzugte Lösung ausgewählt.
+
+Für einen übersichtlichen vergleich werden die Optionen in \cref{tab:nutzwertanalyse-erfassung} aufgelistet und gegeneinnander abgewogen und dann anschließend mit der Formel
+\begin{equation}
+    N_j =
+    \frac{\sum_{i=1}^{n} w_i \cdot b_{ij}}
+    {b_{\max} \cdot \sum_{i=1}^{n} w_i}
+    \cdot 100\,\%\label{eq:equation}
+\end{equation}
+bestimmt werden, wobei $w_i$ hier die Prozentuale Gewichtung ist und $b_{ij}$ die selbstgewählte Bewertung, welche von $1 - 5$ gesetzt wurde.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Nutzwertanalyse der betrachteten Erfassungslösungen}
+    \label{tab:nutzwertanalyse-erfassung}
+    \begin{tabular}{p{5.3cm}rrrr}
+        \hline
+        \textbf{Kriterium} &
+        \textbf{Gewichtung} &
+        \textbf{Excel} &
+        \textbf{Web-App} &
+        \textbf{APK} \\
+        \hline
+
+        Bedienbarkeit auf dem Tablet
+        & 20\,\% & 2 & 4 & 5 \\
+
+        Offline-Nutzung
+        & 15\,\% & 5 & 3 & 5 \\
+
+        Automatische IDs und Fehlervermeidung
+        & 15\,\% & 3 & 5 & 5 \\
+
+        Erfassung von Verbindungen
+        & 10\,\% & 2 & 5 & 5 \\
+
+        Einbindung von Fotos
+        & 10\,\% & 1 & 3 & 5 \\
+
+        Export für \LaTeX
+        & 10\,\% & 5 & 5 & 5 \\
+
+        Einrichtung und Installation
+        & 10\,\% & 3 & 4 & 4 \\
+
+        Sicherung und Datenübertragung
+        & 5\,\% & 5 & 3 & 4 \\
+
+        Änderungen und Aktualisierungen
+        & 5\,\% & 4 & 1 & 1 \\
+        \hline
+
+        \textbf{Gesamtbewertung}
+        & \textbf{100\,\%}
+        & \textbf{63\,\%}
+        & \textbf{78\,\%}
+        & \textbf{93\,\%} \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+mit
+\begin{align}
+    N_{\text{Excel}}
+    &=
+    \frac{
+        20 \cdot 2 +
+        15 \cdot 5 +
+        15 \cdot 3 +
+        10 \cdot 2 +
+        10 \cdot 1 +
+        10 \cdot 5 +
+        10 \cdot 3 +
+        5 \cdot 5 +
+        5 \cdot 4
+    }{500}
+    \cdot 100\,\% \\
+    &=
+    \frac{315}{500}
+    \cdot 100\,\%
+    =
+    63\,\%,
+    \\[1em]
+    N_{\text{Web-App}}
+    &=
+    \frac{
+        20 \cdot 4 +
+        15 \cdot 3 +
+        15 \cdot 5 +
+        10 \cdot 5 +
+        10 \cdot 3 +
+        10 \cdot 5 +
+        10 \cdot 4 +
+        5 \cdot 3 +
+        5 \cdot 1
+    }{500}
+    \cdot 100\,\% \\
+    &=
+    \frac{390}{500}
+    \cdot 100\,\%
+    =
+    78\,\%,
+    \\[1em]
+    N_{\text{APK}}
+    &=
+    \frac{
+        20 \cdot 5 +
+        15 \cdot 5 +
+        15 \cdot 5 +
+        10 \cdot 5 +
+        10 \cdot 5 +
+        10 \cdot 5 +
+        10 \cdot 4 +
+        5 \cdot 4 +
+        5 \cdot 1
+    }{500}
+    \cdot 100\,\% \\
+    &=
+    \frac{465}{500}
+    \cdot 100\,\%
+    =
+    93\,\%.
+\end{align}
+
+
+Im Folgenden werden die Bewertungen der betrachteten Lösungen anhand der zuvor festgelegten Kriterien begründet.
+
+
+Die Bedienbarkeit erhielt die höchste Gewichtung, da sie einen unmittelbaren Einfluss auf die Geschwindigkeit und Fehleranfälligkeit der Datenerfassung hat.
+Bei einer großen Anzahl von Bauteilen können umständliche oder häufig wiederkehrende Eingabeschritte den Arbeitsablauf erheblich verlangsamen.
+
+Die Offline-Nutzung und der Automatisierungsgrad wurden ebenfalls als wichtige Kriterien berücksichtigt.
+Eine zuverlässige Offline-Funktion ermöglicht die Erfassung unabhängig von der Qualität der verfügbaren Internetverbindung und verringert das Risiko, dass Arbeitsfortschritte aufgrund von Verbindungsproblemen nicht vollständig gespeichert werden.
+Da die Aufnahme einer großen Anzahl von Bauteilen viele gleichartige Arbeitsschritte umfasst, können zudem Unaufmerksamkeit und Ermüdung die Fehlerwahrscheinlichkeit erhöhen.
+Eine automatische und fortlaufende Vergabe der Identifikationsnummern sowie vorgegebene Eingabe- und Auswahlmöglichkeiten reduzieren dieses Fehlerpotenzial und gewährleisten eine konsistente Datenerfassung.
+
+Die Unterstützung bei der Erfassung von Verbindungen, die Einbindung von Fotos, der Export für \LaTeX{} sowie der Einrichtungsaufwand wurden im Vergleich zu Bedienbarkeit, Offline-Nutzung und Automatisierung geringer gewichtet.
+Diese Funktionen erleichtern den Arbeitsablauf, sind für die grundlegende Aufnahme der Bauteile jedoch nicht in jedem Fall zwingend erforderlich und könnten bei Bedarf durch manuelle Arbeitsschritte ersetzt werden.
+Da die Erfassung einer großen Anzahl von Elementen viele wiederkehrende Tätigkeiten umfasst, bieten solche Komfortfunktionen dennoch einen deutlichen Mehrwert.
+Sie reduzieren den erforderlichen Arbeitsaufwand, vereinfachen die Dokumentation und senken die Wahrscheinlichkeit von Fehlern, die durch Unaufmerksamkeit oder Ermüdung entstehen können.
+
+Die Kriterien „Sicherung und Datenübertragung“ sowie „Änderungen und Aktualisierungen“ erhielten eine vergleichsweise geringe Gewichtung.
+Der Export und die Übertragung der erfassten Daten stellen bei allen betrachteten Lösungen grundsätzlich keinen größeren Aufwand dar.
+Eine regelmäßige Sicherung ist zwar wichtig, beeinflusst den eigentlichen Vorgang der Katalogisierung jedoch nur indirekt.
+Auch die nachträgliche Anpassbarkeit wurde geringer gewichtet, da die Excel-Datei, die Web-App und die Android-App bereits vor ihrem praktischen Einsatz getestet und auf mögliche Verbesserungen überprüft werden.
+Dennoch können während der Erfassung unerwartete Probleme oder neue Anforderungen auftreten.
+In diesem Fall unterscheiden sich die Lösungen darin, wie schnell Änderungen vorgenommen und vor Ort bereitgestellt werden können.
+Insbesondere bei der Android-App ist dafür die Erstellung und Installation einer aktualisierten APK erforderlich.
+
+Bei der Bewertung von Excel ist außerdem zu berücksichtigen, dass es sich um eine herstellerspezifische Software des Unternehmens Microsoft handelt.
+Der Quellcode ist nicht öffentlich zugänglich, und die Weiterentwicklung, Lizenzierung sowie langfristige Verfügbarkeit der Anwendung werden durch den Hersteller bestimmt.
+Je nach eingesetzter Version können zudem ein Microsoft-Konto, eine kostenpflichtige Lizenz oder die Nutzung von Cloud-Diensten erforderlich sein.
+Daraus entstehen mögliche Abhängigkeiten vom Anbieter und Fragestellungen hinsichtlich Datenschutz und Datenhoheit.
+Da die Tabellen grundsätzlich lokal gespeichert und in offene Formate wie CSV exportiert werden können, wurde Excel dennoch als mögliche Lösung berücksichtigt.
+
+\newpage
+\subsubsection{Excel-Datei}
+
+\textbf{Bedienbarkeit auf dem Tablet (2/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Die tabellarische Darstellung bietet eine kompakte
+    Übersicht über die erfassten Daten.
+    \item[\minuspunkt] Kleine Zellen und Bedienelemente erschweren die
+    Bedienung auf einem Touchscreen.
+    \item[\minuspunkt] Wiederkehrende Eingaben und der Wechsel zwischen
+    Zellen verlangsamen den Arbeitsablauf.
+    \item[\minuspunkt]
+    Schäbiges App Layout.
+\end{itemize}
+
+\medskip
+\textbf{Offline-Nutzung (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Eine lokal gespeicherte Datei kann vollständig ohne
+    Internetverbindung bearbeitet werden.
+\end{itemize}
+
+\medskip
+\textbf{Automatische IDs und Fehlervermeidung (3/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] IDs können durch Formeln oder vorbereitete
+    Zahlenreihen erzeugt werden.
+    \item[\minuspunkt] Formeln und IDs können versehentlich verändert,
+    gelöscht oder überschrieben werden.
+    \item[\minuspunkt]
+    In der Excel App sind manche Formeln und Funktionen nicht möglich, was das Automatisieren beschränkt.
+\end{itemize}
+
+\medskip
+\textbf{Erfassung von Verbindungen (2/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Verbindungen können in einem zweiten Tabellenblatt
+    dokumentiert werden.
+    \item[\minuspunkt] Die Auswahl und Zuordnung der beteiligten Bauteile
+    ist auf dem Tablet vergleichsweise umständlich.
+    \item[\minuspunkt]
+    Man muss zwischen Tabs wechseln, was den Workflow stört.
+    \item[\minuspunkt]
+    Die IDs sind nicht vorbereitet, man muss alle selber eingeben.
+\end{itemize}
+
+\medskip
+\textbf{Einbindung von Fotos (1/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\minuspunkt] Fotos lassen sich nur umständlich in Tabellenzellen
+    einfügen und den Bauteilen zuordnen.
+    \item[\minuspunkt] Eingefügte Bilder können die Dateigröße und
+    Übersichtlichkeit deutlich beeinträchtigen.
+    \item[\minuspunkt]
+    Das Bewegen von Fotos ist aufgrund der Touchfunktion und die automatische skalierung von Excel ebenfalls komplizierter.
+\end{itemize}
+
+
+\medskip
+\textbf{Export für \LaTeX{} (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Tabellenblätter können direkt als CSV-Dateien
+    exportiert und in \LaTeX{} eingelesen werden.
+\end{itemize}
+
+\medskip
+\textbf{Einrichtung und Installation (3/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Nach Erstellung der Tabelle kann diese theoretisch unmittelbar
+    verwendet werden.
+    \item[\minuspunkt] Auswahlfelder, Formatierungen und Prüfregeln müssen
+    zunächst eingerichtet werden.
+    \item[\minuspunkt] Excel ist ein herstellerspezifische Produkt von Microsoft, welches einen Account benötigt, der aufgrund eines Problems mit der Studi Lizenz nur erschwert zu bekommen ist.
+\end{itemize}
+
+\medskip
+\textbf{Sicherung und Datenübertragung (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Die gesamte Erfassung befindet sich in einer einzelnen
+    Datei, die einfach kopiert und gesichert werden kann.
+\end{itemize}
+
+\medskip
+\textbf{Änderungen und Aktualisierungen (4/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Spalten, Kategorien und Auswahlfelder können
+    nachträglich angepasst werden.
+    \item[\minuspunkt] Änderungen an der Tabellenstruktur können bestehende
+    Formeln oder Verweise beeinträchtigen.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Web-App}
+
+\textbf{Bedienbarkeit auf dem Tablet (4/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Große Eingabefelder und Schaltflächen erleichtern die
+    Bedienung auf einem Touchscreen.
+    \item[\pluspunkt] Bauteile und Verbindungen werden in getrennten
+    Ansichten dargestellt.
+    \item[\minuspunkt] Die Bedienung erfolgt innerhalb eines Browsers und
+    kann durch dessen Benutzeroberfläche beeinflusst werden.
+\end{itemize}
+
+\medskip
+\textbf{Offline-Nutzung (3/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Nach der ersten Einrichtung kann die Anwendung
+    grundsätzlich offline verfügbar gemacht werden.
+    \item[\minuspunkt] Der Offlinebetrieb hängt vom Browser und dessen
+    Zwischenspeicher ab.
+\end{itemize}
+
+\medskip
+\textbf{Automatische IDs und Fehlervermeidung (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Eindeutige IDs werden automatisch vergeben und bleiben
+    beim Bearbeiten eines Bauteils erhalten.
+    \item[\pluspunkt] Auswahlfelder verhindern viele fehlerhafte oder
+    uneinheitliche Eingaben.
+\end{itemize}
+
+\medskip
+\textbf{Erfassung von Verbindungen (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Bereits erfasste Bauteile können anhand ihrer ID und
+    Bezeichnung ausgewählt werden.
+    \item[\pluspunkt] Die Anwendung verhindert die Verbindung eines Bauteils
+    mit sich selbst.
+    \item[\pluspunkt] Die Anwendung bietet bei Verbindungen nur bislang erstellte IDs an.
+\end{itemize}
+
+\medskip
+\textbf{Einbindung von Fotos (3/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Fotos können direkt ausgewählt und einem Bauteil
+    zugeordnet werden.
+    \item[\minuspunkt] Die Speicherung vieler Fotos kann den verfügbaren
+    Browserspeicher stark beanspruchen.
+    \item[\minuspunkt] Die UI für die Fotoauswahl im Browser ist nicht top of the shelf.
+\end{itemize}
+
+\medskip
+\textbf{Export für \LaTeX{} (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Bauteile und Verbindungen können getrennt als
+    CSV-Dateien exportiert werden.
+    \item[\pluspunkt] Es kann ein Backup erstellt werden, was das arbeiten auch auf mehrere Tage problemslos aufteilen lässt .
+\end{itemize}
+
+\medskip
+\textbf{Einrichtung und Installation (4/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Die Anwendung Anwendung kann über einen Link geöffnet
+    werden und benötigt keine klassische Installation.
+    \item[\minuspunkt] Für den ersten Zugriff und die Vorbereitung des
+    Offlinebetriebs ist eine Internetverbindung erforderlich.
+    \item[\minuspunkt] Es ist ein OpenAI Account notwendig, um auf die Wesite zuzugreifen.
+\end{itemize}
+
+\medskip
+\textbf{Sicherung und Datenübertragung (3/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Die erfassten Daten können als Sicherungsdatei
+    heruntergeladen werden.
+    \item[\minuspunkt] Die Daten sind zunächst an den jeweiligen Browser
+    gebunden und müssen manuell gesichert werden.
+\end{itemize}
+
+\medskip
+\textbf{Änderungen und Aktualisierungen (1/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\minuspunkt] Die dokumentierende Person kann Aufbau und Funktionen
+    der Anwendung nicht selbstständig verändern.
+    \item[\minuspunkt] Anpassungen erfordern Änderungen am Programmcode und
+    eine erneute Veröffentlichung.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Android-APK}
+
+\textbf{Bedienbarkeit auf dem Tablet (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Die Oberfläche wurde gezielt für die Bedienung auf
+    einem Android-Tablet entwickelt.
+    \item[\pluspunkt] Große Eingabefelder, Schaltflächen und getrennte
+    Ansichten ermöglichen einen schnellen Arbeitsablauf.
+\end{itemize}
+
+\medskip
+\textbf{Offline-Nutzung (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Alle benötigten Anwendungsdateien befinden sich
+    innerhalb der APK und stehen ohne Internetverbindung zur Verfügung.
+\end{itemize}
+
+\medskip
+\textbf{Automatische IDs und Fehlervermeidung (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Die IDs werden automatisch und eindeutig vergeben.
+    \item[\pluspunkt] Auswahlfelder und Eingabeprüfungen reduzieren
+    fehlerhafte Einträge.
+\end{itemize}
+
+\medskip
+\textbf{Erfassung von Verbindungen (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Bauteile können bequem über ihre ID und Bezeichnung
+    ausgewählt und miteinander verknüpft werden.
+    \item[\pluspunkt] Die Verbindungen werden getrennt von den Bauteildaten
+    gespeichert und übersichtlich dargestellt.
+\end{itemize}
+
+\medskip
+\textbf{Einbindung von Fotos (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Fotos können direkt über die Funktionen des Tablets
+    ausgewählt und einem Bauteil zugeordnet werden.
+    \item[\pluspunkt] Die aufgenommenen Bilder werden gemeinsam mit den
+    übrigen Daten gesichert.
+    \item[\pluspunkt] UI zum Auswählen ist sehr nutzerfreundlich.
+\end{itemize}
+
+\medskip
+\textbf{Export für \LaTeX{} (5/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Bauteile und Verbindungen können als getrennte
+    CSV-Dateien exportiert werden.
+    \item[\pluspunkt] Der Android-Dialog ermöglicht das Speichern und Teilen
+    der erzeugten Dateien.
+\end{itemize}
+
+\medskip
+\textbf{Einrichtung und Installation (4/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Nach einmaliger Installation kann die Anwendung direkt
+    über das App-Symbol gestartet werden.
+    \item[\minuspunkt] Da die Anwendung nicht über den Play Store verteilt
+    wird, muss die Installation aus einer externen Quelle einmalig erlaubt
+    werden.
+\end{itemize}
+
+\medskip
+\textbf{Sicherung und Datenübertragung (4/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\pluspunkt] Sicherungsdateien können über den Android-Dialog
+    gespeichert oder an ein anderes Gerät übertragen werden.
+    \item[\minuspunkt] Die Sicherung muss durch die dokumentierende Person
+    manuell durchgeführt werden.
+\end{itemize}
+
+\medskip
+\textbf{Änderungen und Aktualisierungen (1/5):}
+\begin{itemize}[leftmargin=2em, nosep]
+    \item[\minuspunkt] Änderungen erfordern eine Anpassung des Programmcodes
+    und die Erstellung einer neuen APK, was lokal nicht möglich ist.
+\end{itemize}
