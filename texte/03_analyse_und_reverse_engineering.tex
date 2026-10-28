@@ -1,1 +1,448 @@
 \chapter{Analyse und Reverse Engineering}\label{ch:analyse-und-reverse-engineering}
+Ziel der Analyse ist es, die auf der Platine vorhandenen Bauteile und deren elektrische Verbindungen systematisch zu erfassen.
+Hierzu werden die Leiterbahnen schrittweise nachverfolgt und die Ergebnisse mithilfe der Erfassungs-App dokumentiert.
+Dabei entstehen eine Bauteilliste und eine Verbindungsliste, die als Grundlage für die weitere Rekonstruktion der Schaltung dienen.
+
+\section{Demontage und Vorbereitung der Platine}\label{sec:demontage-und-vorbereitung-der-platine}
+Zunächst wurden die Pin-Stecker vorsichtig von der Platine getrennt.
+Anschließend wurden die vier Schrauben an den Ecken gelöst und zusammen mit den beiden Gewindeelementen zur Höhenanpassung geordnet neben dem Modell abgelegt.
+Danach konnte die Platine vom Modell getrennt und für die Untersuchung zugänglich gemacht werden.
+
+\section{Vorgehensweise bei der Bauteil- und Verbindungserfassung}\label{sec:vorgehensweise-bei-der-bauteil--und-verbindungserfassung}
+Die Aufnahme erfolgte arbeitsteilig durch zwei Gruppenmitglieder.
+Während eine Person die Leiterbahnen auf der Platine nachverfolgte und die angeschlossenen Bauteile identifizierte, dokumentierte die zweite Person die Ergebnisse in der App.
+
+Hierfür wurde eine Leiterbahn jeweils so weit verfolgt, bis ein noch nicht erfasstes Bauteil erreicht wurde.
+Dieses wurde beschrieben, mit einer eindeutigen ID versehen und in die Bauteilliste aufgenommen.
+Anschließend konnten die miteinander verbundenen Bauteile in der App ausgewählt und ihre Verbindung dokumentiert werden.
+Soweit erforderlich, wurde dabei der jeweilige Anschlusspin berücksichtigt.
+
+\section{Untersuchung der Spannungsversorgung}\label{sec:untersuchung-der-spannungsversorgung}
+Die Untersuchung begann mit der Leiterbahn der −12-V-Spannungsversorgung.
+Ausgehend vom Versorgungsanschluss wurden die Leiterbahnen und alle unmittelbar damit verbundenen Bauteile systematisch erfasst.
+Dieses Vorgehen wurde anschließend für die weitere Versorgungsspannung und die Masseverbindungen wiederholt.
+
+Dadurch konnte bereits ein großer Teil der Bauteile aufgenommen und deren Anbindung an die Spannungsversorgung beziehungsweise an Masse dokumentiert werden.
+Gleichzeitig entstand eine erste Orientierung über den Aufbau der Platine.
+
+\section{Untersuchung der Pin-Stecker}\label{sec:untersuchung-der-pin-stecker}
+Im nächsten Schritt wurden die Anschlüsse der Pin-Stecker untersucht.
+Für jeden Anschluss wurde nachverfolgt, mit welchen Bauteilen er elektrisch verbunden ist.
+Die Erfassung erfolgte nach demselben Prinzip wie bei der Untersuchung der Spannungsversorgung.
+
+Bereits dokumentierte Bauteile wurden anhand ihrer IDs zugeordnet.
+Neu gefundene Bauteile wurden ergänzt und ihre Verbindungen eingetragen.
+Mit fortschreitender Aufnahme verlagerte sich der Schwerpunkt zunehmend auf die Nachverfolgung der Verbindungen zwischen den bereits bekannten Bauteilen.
+
+\section{Fotografische Dokumentation und Bauteilzuordnung}\label{sec:fotografische-dokumentation-und-bauteilzuordnung}
+Nach der Untersuchung der Pin-Stecker wurde ein Foto der Platinenoberseite aufgenommen.
+Auf diesem wurden die bereits erfassten Bauteile mit ihren zugewiesenen IDs beschriftet (siehe Abbildung zur Bauteilzuordnung).
+
+Die beschriftete Aufnahme erleichterte die Orientierung auf der Platine und den Abgleich mit der Bauteilliste.
+Dabei konnten zuvor übersehene Bauteile erkannt und in der Dokumentation ergänzt werden.
+
+\section{Untersuchung der integrierten Schaltungen}\label{sec:untersuchung-der-integrierten-schaltungen}
+Anschließend wurden die integrierten Schaltungen (ICs) einzeln untersucht.
+Für jeden IC wurden die Verbindungen an den jeweiligen Anschlusspins nachverfolgt und in der App dokumentiert.
+
+Die dabei gewonnenen Zuordnungen wurden außerdem in der beschrifteten Platinenaufnahme ergänzt.
+Dadurch ließ sich die Übersicht über die Verbindungen zwischen den ICs und den übrigen Bauteilen schrittweise erweitern.
+
+\section{Zusammenführung und Prüfung der erfassten Daten}\label{sec:zusammenfuhrung-und-prufung-der-erfassten-daten}
+Die Bauteilliste, die Verbindungsliste und die beschriftete Platinenaufnahme bilden gemeinsam die Grundlage für die weitere Auswertung.
+Zur abschließenden Prüfung werden diese Unterlagen miteinander abgeglichen.
+Dabei ist insbesondere zu kontrollieren, ob alle Bauteile eindeutig zugeordnet und die aufgenommenen Verbindungen vollständig und widerspruchsfrei dokumentiert sind.
+
+Noch unklare Verbindungen und nicht eindeutig identifizierte Bauteile werden gekennzeichnet und gezielt nachuntersucht.
+Auf dieser Grundlage kann anschließend die Schaltungsstruktur weiter rekonstruiert werden.
+
+% Zum Einfügen in die bestehende Dokumentation mit \usepackage{settings}.
+% Alle 168 IDs aus der CSV bleiben erhalten. Stand: 27.10.2026.
+\subsection{Bauteilliste der untersuchten Platine}
+\label{sec:bauteilliste}
+
+Die folgende Liste enthält alle 168 in der Aufnahme vergebenen IDs.
+Jede ID wurde im Export mit der Anzahl 1 erfasst. Auch Anschlüsse,
+Steckverbinder und Drahtbrücken bleiben für den Abgleich mit der
+Verbindungsliste enthalten. Die Zahl der IDs ist daher nicht mit
+der Anzahl eigenständiger elektronischer Bauteile gleichzusetzen.
+
+Die Werte wurden aus den notierten Aufdrucken und Farbringen abgeleitet;
+eine messtechnische Bestätigung liegt nicht vor. Widerstände mit vier
+Ringen werden mit zwei, solche mit fünf Ringen mit drei Wertziffern
+ausgewertet. Bei sechs Ringen werden die ersten fünf entsprechend
+ausgewertet; die Bedeutung des Zusatzrings ist noch zu prüfen.
+Die Tabelle nennt allgemeine Bauteilfunktionen, soweit sie durch den Typ
+belegt sind. Die tatsächliche Funktion in der Platine folgt erst aus
+der Untersuchung der Beschaltung.
+
+\textbf{Kennzeichnung:} \emph{Farbcode} = aus der Abschrift berechneter
+Nennwert; \emph{Aufdruck} = Wert aus der Aufnahme;
+\emph{Typ} = allgemeine Bauteilart durch Datenblatt zugeordnet;
+\emph{vorläufig} = plausible, noch zu bestätigende Zuordnung;
+\emph{offen} = keine eindeutige Bestimmung möglich.
+Q1--Q17 verweisen auf die Quellen unterhalb der Tabelle.
+
+\begin{GPMTable}
+{L{1.0cm}|L{3.0cm}|L{3.0cm}|Y|L{1.0cm}}
+{Bauteile, Anschlüsse und Verbindungselemente der untersuchten Platine}
+{tab:bauteilliste}
+{\TableHead{ID} & \TableHead{Bauteilart} & \TableHead{Wert / Typ} & \TableHead{Zuordnung und Prüfhinweise} & \TableHead{Quelle}}
+    \textbf{P001} & Sicherung & Nennstrom unbekannt & offen. Bauform, Auslösecharakteristik und Nennstrom ablesen. & -- \\
+    \hline
+    \textbf{P002} & Elektrolytkondensator & 220 \ensuremath{\mu}F / 40 V & Aufdruck. Polung und tatsächliche Versorgungsknoten prüfen. Die CSV nennt +12 V und \ensuremath{-}12 V. & -- \\
+    \hline
+    \textbf{P003} & Schaltregler-IC & TL497ACN & Typ. Für Aufwärts-, Abwärts- oder invertierende Wandler; konkrete Schaltung noch bestimmen. & Q2 \\
+    \hline
+    \textbf{P004} & Kondensator, vermutlich & 470 nF & vorläufig. Aufdruck 470N als Kapazität interpretiert; Bauart und Spannungsfestigkeit offen. & -- \\
+    \hline
+    \textbf{P005} & Widerstand & vermutlich 4,7 k\ensuremath{\Omega} & vorläufig. Farbfolge enthält „leer“. Bei fünf relevanten Ringen Gelb–Lila–Schwarz–Braun–Braun: 4,7 k\ensuremath{\Omega} \ensuremath{\pm}1 \%. & Q1 \\
+    \hline
+    \textbf{P006} & Elektrolytkondensator & 1000 \ensuremath{\mu}F / 6,3 V & Aufdruck. Temperaturangabe laut Aufnahme: 85 °C. & -- \\
+    \hline
+    \textbf{P007} & Schottkydiode & BAT41 & Typ. In der CSV als Freilaufdiode bezeichnet; diese Schaltungsfunktion ist noch zu prüfen. & Q9 \\
+    \hline
+    \textbf{P008} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P009} & Versorgungsanschluss & +12 V & Aufdruck. Erfasster Anschluss, kein eigenständiger Halbleiter. & -- \\
+    \hline
+    \textbf{P010} & Versorgungsanschluss & \ensuremath{-}12 V & Aufdruck. Bedeutung als negative Schiene oder Versorgungsrückleiter prüfen. & -- \\
+    \hline
+    \textbf{P011} & Draht / Drahtbrücke & blau & Aufdruck. Leiterquerschnitt und Funktion nicht dokumentiert. & -- \\
+    \hline
+    \textbf{P012} & Masseanschluss & Analogausgang & Aufdruck. Als „Erde“ erfasst; Schutzleiterfunktion nicht nachgewiesen. & -- \\
+    \hline
+    \textbf{P013} & Widerstand & 220 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Rot-Rot-Schwarz-Ornage-Braun. & Q1 \\
+    \hline
+    \textbf{P014} & Spannungsreferenz & LM329DZ / ca. 6,9 V & Typ. Kein diskreter Transistor. „524“ ist Zusatzaufdruck, kein Referenzspannungswert. & Q3 \\
+    \hline
+    \textbf{P015} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P016} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P017} & IC, vermutlich OPV & möglicherweise TAE1453A & vorläufig. Erfasst als TAB1453A. TAE1453 ist ein OPV mit offenem Kollektorausgang; genaue Beschriftung und Pinzahl prüfen. & Q17 \\
+    \hline
+    \textbf{P018} & Logik-IC & CD4001B & Typ. Vier NOR-Gatter mit je zwei Eingängen; Beschaltung als Inverter ist möglich. Zusatzaufdrucke nicht als Typ übernommen. & Q4 \\
+    \hline
+    \textbf{P019} & IC, vermutlich OPV & möglicherweise TAE1453A & vorläufig. Erfasst als TAB1453A. TAE1453 ist ein OPV mit offenem Kollektorausgang; genaue Beschriftung und Pinzahl prüfen. & Q17 \\
+    \hline
+    \textbf{P020} & Leistungs-MOSFET, vermutlich & BUZ10 & vorläufig. „BUZ1U“ bzw. „BUZ 108048“ vermutlich BUZ10 mit Zusatzcode 8048. Vollständigen Aufdruck prüfen. & Q13 \\
+    \hline
+    \textbf{P021} & Spannungsreferenz & LM329DZ / ca. 6,9 V & Typ. Kein diskreter Transistor. „524“ ist Zusatzaufdruck, kein Referenzspannungswert. & Q3 \\
+    \hline
+    \textbf{P022} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P023} & Widerstand & 430 k\ensuremath{\Omega} & vorläufig. Bei Silber: \ensuremath{\pm}10 \%; bei Grau: \ensuremath{\pm}0,05 \%. Farbring und Leserichtung prüfen. & Q1 \\
+    \hline
+    \textbf{P024} & Zweifacher CMOS-OPV & ICL7621 & Typ. „I“ in der Aufnahme vermutlich Ziffer 1; vollständige Endung des Typs prüfen. & Q5 \\
+    \hline
+    \textbf{P025} & Steckverbinder & weiß & Aufdruck. Laut Aufnahme sind Pin 19 und 20 unbelegt; Pinzahl und Belegung prüfen. & -- \\
+    \hline
+    \textbf{P026} & Leistungs-MOSFET, vermutlich & BUZ10A & vorläufig. BUZ10A deutet auf Einzel-MOSFET. Die Bezeichnung „Transistoren-Pack“ und Stückzahl am Bauteil prüfen. & Q13 \\
+    \hline
+    \textbf{P027} & Logik-IC & CD4001B & Typ. Vier NOR-Gatter mit je zwei Eingängen; Beschaltung als Inverter ist möglich. Zusatzaufdrucke nicht als Typ übernommen. & Q4 \\
+    \hline
+    \textbf{P028} & Steckverbinder & mehrfarbiges Kabel & Aufdruck. Pinzahl, Rastermaß und Belegung offen. & -- \\
+    \hline
+    \textbf{P029} & Logik-IC & CD4001B & Typ. Vier NOR-Gatter mit je zwei Eingängen; Beschaltung als Inverter ist möglich. Zusatzaufdrucke nicht als Typ übernommen. & Q4 \\
+    \hline
+    \textbf{P030} & N-Kanal-MOSFET & BSS89 & Typ. Selbstsperrender Kleinsignal-MOSFET; Pinbelegung herstellerabhängig prüfen. & Q12 \\
+    \hline
+    \textbf{P031} & Kondensator, Bauart offen & 1 \ensuremath{\mu}F & Aufdruck. 1u0 = 1 \ensuremath{\mu}F; zusätzlich „40VR, 25VCN“ notiert. Spannungsangaben und Bauart prüfen. & -- \\
+    \hline
+    \textbf{P032} & Spannungsregler, vermutlich & 78Lxx, eventuell 78L05 & vorläufig. Aufnahme „78L 0,5A“ unvollständig. Ein 78L05 wäre ein 5-V-/100-mA-Regler; 0,5 A ist dadurch nicht belegt. & Q16 \\
+    \hline
+    \textbf{P033} & Kondensator, Bauart offen & 1 \ensuremath{\mu}F & Aufdruck. 1u0 = 1 \ensuremath{\mu}F; zusätzlich „40VR, 25VCN“ notiert. Spannungsangaben und Bauart prüfen. & -- \\
+    \hline
+    \textbf{P034} & Kondensator, Bauart offen & 1 \ensuremath{\mu}F & Aufdruck. 1u0 = 1 \ensuremath{\mu}F; zusätzlich „40VR, 25VCN“ notiert. Spannungsangaben und Bauart prüfen. & -- \\
+    \hline
+    \textbf{P035} & Kondensator, Bauart offen & 1 \ensuremath{\mu}F & Aufdruck. 1u0 = 1 \ensuremath{\mu}F; zusätzlich „40VR, 25VCN“ notiert. Spannungsangaben und Bauart prüfen. & -- \\
+    \hline
+    \textbf{P036} & Kondensator, Bauart offen & 1 \ensuremath{\mu}F & Aufdruck. 1u0 = 1 \ensuremath{\mu}F; zusätzlich „40VR, 25VCN“ notiert. Spannungsangaben und Bauart prüfen. & -- \\
+    \hline
+    \textbf{P037} & Monoflop-IC & HEF4528BP & Typ. Zwei nachtriggerbare monostabile Multivibratoren; Impulsdauer durch externe RC-Glieder. & Q6 \\
+    \hline
+    \textbf{P038} & Monoflop-IC & HEF4528BP & Typ. Zwei nachtriggerbare monostabile Multivibratoren; Impulsdauer durch externe RC-Glieder. & Q6 \\
+    \hline
+    \textbf{P039} & Monoflop-IC & HEF4528BP & Typ. Zwei nachtriggerbare monostabile Multivibratoren; Impulsdauer durch externe RC-Glieder. & Q6 \\
+    \hline
+    \textbf{P040} & Masseanschluss & Digitaleingang & Aufdruck. Als „Erde“ erfasst; Schutzleiterfunktion nicht nachgewiesen. & -- \\
+    \hline
+    \textbf{P041} & Masseanschluss & Digitalausgang & Aufdruck. Als „Erde“ erfasst; Schutzleiterfunktion nicht nachgewiesen. & -- \\
+    \hline
+    \textbf{P042} & Kondensator, Bauart offen & 1 \ensuremath{\mu}F / 25 V & Aufdruck. 1u0 als 1 \ensuremath{\mu}F interpretiert; Hersteller laut Aufnahme Philips. & -- \\
+    \hline
+    \textbf{P043} & Monoflop-IC & HEF4528BP & Typ. Zwei nachtriggerbare monostabile Multivibratoren; Impulsdauer durch externe RC-Glieder. & Q6 \\
+    \hline
+    \textbf{P044} & Widerstandsnetzwerk & vermutlich 3,3 k\ensuremath{\Omega} je Element & vorläufig. A332J: Code 332 = 3,3 k\ensuremath{\Omega}; J üblicherweise \ensuremath{\pm}5 \%. Anzahl, interne Verschaltung und Serie prüfen. Laut Aufnahme wenig Lötzinn an Pin 2. & Q14 Q1 \\
+    \hline
+    \textbf{P045} & Tantalkondensator, vermutlich & vermutlich 22 \ensuremath{\mu}F / 16 V & vorläufig. Aufdruck „+22 16V, Erotantal S0“ spricht für gepolten Tantalkondensator; Typ und Polung prüfen. & -- \\
+    \hline
+    \textbf{P046} & N-Kanal-MOSFET & BSS91 & Typ. Selbstsperrender Kleinsignal-MOSFET; N7 als Zusatzaufdruck erfasst. & Q12 \\
+    \hline
+    \textbf{P047} & N-Kanal-MOSFET & BSS91 & Typ. Selbstsperrender Kleinsignal-MOSFET; N7 als Zusatzaufdruck erfasst. & Q12 \\
+    \hline
+    \textbf{P048} & N-Kanal-MOSFET & BSS91 & Typ. Selbstsperrender Kleinsignal-MOSFET; N7 als Zusatzaufdruck erfasst. & Q12 \\
+    \hline
+    \textbf{P049} & Analogmultiplexer-IC & vermutlich HCF4051BE & vorläufig. Aufdruck HCF405IBE wahrscheinlich HCF4051BE: ein 8-Kanal-Analogmultiplexer/Demultiplexer. & Q7 \\
+    \hline
+    \textbf{P050} & Zweifacher CMOS-OPV & ICL7621 & Typ. „I“ in der Aufnahme vermutlich Ziffer 1; vollständige Endung des Typs prüfen. & Q5 \\
+    \hline
+    \textbf{P051} & Widerstand & 47 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P052} & Widerstand & 1,5 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Grün-Schwarz-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P053} & Operationsverstärker & TL061CP & Typ. Einfacher OPV mit JFET-Eingang; 8719CR als Zusatzaufdruck erfasst. & Q8 \\
+    \hline
+    \textbf{P054} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P055} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P056} & Widerstandsnetzwerk & vermutlich 33 k\ensuremath{\Omega} je Element & vorläufig. 333 = 33 × 10\textsuperscript{3} \ensuremath{\Omega}. Hersteller/Serie AM5, Anzahl und interne Verschaltung ungeklärt. & Q14 \\
+    \hline
+    \textbf{P057} & Widerstand & ungeklärt & offen. Notiert Orange–Orange–Schwarz–Grau/Weiß–Braun: rechnerisch 33 G\ensuremath{\Omega}/330 G\ensuremath{\Omega} \ensuremath{\pm}1 \%. Sehr ungewöhnlich; Farbringe neu ablesen. & Q1 \\
+    \hline
+    \textbf{P058} & Induktivität, vermutlich & Induktivität unbekannt & vorläufig. „Gewickeltes Draht Ding“ spricht für Spule/Drossel; Foto, Anschlusszahl und Messung erforderlich. & -- \\
+    \hline
+    \textbf{P059} & Widerstand & 120 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Rot-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P060} & PNP-Transistor, vermutlich & BC307, Endung unklar & vorläufig. Aufdruck BC307(6) unvollständig; genaue Variante prüfen. & Q11 \\
+    \hline
+    \textbf{P061} & Widerstand & 27,4 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Rot-Lila-Gelb-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P062} & Widerstand & 4,7 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Schwarz-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P063} & Halbleiter, nicht identifiziert & Aufdruck 452LM & offen. Die Zeichenfolge reicht zur eindeutigen Typbestimmung nicht aus; vollständigen Aufdruck erfassen. & -- \\
+    \hline
+    \textbf{P064} & Widerstand & 120 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Rot-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P065} & Widerstandsnetzwerk & vermutlich 22 k\ensuremath{\Omega} je Element & vorläufig. A223J: Code 223 = 22 k\ensuremath{\Omega}; J üblicherweise \ensuremath{\pm}5 \%. Anzahl, interne Verschaltung und Serie prüfen. & Q14 Q1 \\
+    \hline
+    \textbf{P066} & Signalanschluss & Analogausgang U & Aufdruck. Signalpegel und Belastbarkeit noch bestimmen. & -- \\
+    \hline
+    \textbf{P067} & Signalanschluss & Digitaleingang 0 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P068} & Signalanschluss & Digitaleingang 1 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P069} & Signalanschluss & Digitaleingang 2 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P070} & Signalanschluss & Digitaleingang 3 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P071} & Signalanschluss & Digitaleingang 4 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P072} & Signalanschluss & Digitaleingang 5 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P073} & Signalanschluss & Digitaleingang 6 & Aufdruck. Signalpegel und Steckerzuordnung noch bestimmen. & -- \\
+    \hline
+    \textbf{P074} & Widerstandsnetzwerk & vermutlich 3,3 k\ensuremath{\Omega} je Element & vorläufig. A332J: Code 332 = 3,3 k\ensuremath{\Omega}; J üblicherweise \ensuremath{\pm}5 \%. Anzahl, interne Verschaltung und Serie prüfen. & Q14 Q1 \\
+    \hline
+    \textbf{P075} & N-Kanal-MOSFET & BSS89 & Typ. Selbstsperrender Kleinsignal-MOSFET; Pinbelegung herstellerabhängig prüfen. & Q12 \\
+    \hline
+    \textbf{P076} & N-Kanal-MOSFET & BSS89 & Typ. Selbstsperrender Kleinsignal-MOSFET; Pinbelegung herstellerabhängig prüfen. & Q12 \\
+    \hline
+    \textbf{P077} & N-Kanal-MOSFET & BSS89 & Typ. Selbstsperrender Kleinsignal-MOSFET; Pinbelegung herstellerabhängig prüfen. & Q12 \\
+    \hline
+    \textbf{P078} & N-Kanal-MOSFET & BSS89 & Typ. Selbstsperrender Kleinsignal-MOSFET; Pinbelegung herstellerabhängig prüfen. & Q12 \\
+    \hline
+    \textbf{P079} & Signalanschluss & Digitalausgang 0 & Aufdruck. Signalpegel und Belastbarkeit noch bestimmen. & -- \\
+    \hline
+    \textbf{P080} & Signalanschluss & Digitalausgang 1 & Aufdruck. Signalpegel und Belastbarkeit noch bestimmen. & -- \\
+    \hline
+    \textbf{P081} & Signalanschluss & Digitalausgang 2 & Aufdruck. Signalpegel und Belastbarkeit noch bestimmen. & -- \\
+    \hline
+    \textbf{P082} & Signalanschluss & Digitalausgang 3 & Aufdruck. Signalpegel und Belastbarkeit noch bestimmen. & -- \\
+    \hline
+    \textbf{P083} & Draht / Drahtbrücke & rot & Aufdruck. Leiterquerschnitt und Funktion nicht dokumentiert. & -- \\
+    \hline
+    \textbf{P084} & Widerstand & 120 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Rot-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P085} & Leistungs-MOSFET, vermutlich & BUZ10 & vorläufig. „BUZ1U“ bzw. „BUZ 108048“ vermutlich BUZ10 mit Zusatzcode 8048. Vollständigen Aufdruck prüfen. & Q13 \\
+    \hline
+    \textbf{P086} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P087} & Widerstand & 150 \ensuremath{\Omega}; \ensuremath{\pm}5 \% & Farbcode.  Ringe: Braun-Grün-Braun-Gold. & Q1 \\
+    \hline
+    \textbf{P088} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}5 \% & Farbcode.  Ringe: Braun-Schwarz-Orange-Gold. & Q1 \\
+    \hline
+    \textbf{P089} & Kondensator, vermutlich Keramik & vermutlich 22 nF & vorläufig. A5C223M: 223 = 22 000 pF = 22 nF; M üblicherweise \ensuremath{\pm}20 \%. Serie/Spannungsfestigkeit ungeklärt. & Q15 \\
+    \hline
+    \textbf{P090} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}5 \% & Farbcode.  Ringe: Braun-Schwarz-Orange-Gold. & Q1 \\
+    \hline
+    \textbf{P091} & Kondensator, vermutlich Keramik & vermutlich 22 nF & vorläufig. A5C223M: 223 = 22 000 pF = 22 nF; M üblicherweise \ensuremath{\pm}20 \%. Serie/Spannungsfestigkeit ungeklärt. & Q15 \\
+    \hline
+    \textbf{P092} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P093} & Widerstand & 4,7 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Schwarz-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P094} & Widerstand & 390 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Orange-Weiß-Schwraz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P095} & Widerstand & 190 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Weiß-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P096} & Trimmpotentiometer & Widerstand unbekannt & offen. 90P R5K 8235S nicht eindeutig entschlüsselt. 5 k\ensuremath{\Omega} ist nur eine Möglichkeit; Endanschlüsse messen. & -- \\
+    \hline
+    \textbf{P097} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}5 \% & Farbcode.  Ringe: Braun-Schwarz-Orange-Gold. & Q1 \\
+    \hline
+    \textbf{P098} & Kondensator, vermutlich Keramik & vermutlich 22 nF & vorläufig. A5C223M: 223 = 22 000 pF = 22 nF; M üblicherweise \ensuremath{\pm}20 \%. Serie/Spannungsfestigkeit ungeklärt. & Q15 \\
+    \hline
+    \textbf{P099} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P100} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}5 \% & Farbcode.  Ringe: Braun-Schwarz-Orange-Gold. & Q1 \\
+    \hline
+    \textbf{P101} & Kondensator, vermutlich Keramik & vermutlich 22 nF & vorläufig. A5C223M: 223 = 22 000 pF = 22 nF; M üblicherweise \ensuremath{\pm}20 \%. Serie/Spannungsfestigkeit ungeklärt. & Q15 \\
+    \hline
+    \textbf{P102} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P103} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwrz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P104} & Widerstand & 68 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Blau-Grau-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P105} & Widerstand & 33 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Orange-Orange-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P106} & Widerstand & 33,2 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Orange-Orange-Rot-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P107} & PNP-Transistor & BC307B & Typ. Kleinsignaltransistor zum Schalten und Verstärken; konkrete Funktion aus Beschaltung ableiten. & Q11 \\
+    \hline
+    \textbf{P108} & Widerstand & 47,5 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Grün-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P109} & Widerstand & 33,2 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Orange-Orange-Rot-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P110} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P111} & Widerstand & 2,74 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Rot-Lila-Gelb-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P112} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P113} & Trimmpotentiometer & Widerstand unbekannt & offen. 7633D kann ein Fertigungscode sein; daraus keinen Widerstandswert ableiten. & -- \\
+    \hline
+    \textbf{P114} & Widerstand & 1 M\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Gelb-Braun. & Q1 \\
+    \hline
+    \textbf{P115} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P116} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P117} & Widerstand & 10 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Rot-braun. & Q1 \\
+    \hline
+    \textbf{P118} & Folienkondensator & 1 \ensuremath{\mu}F / vermutlich 63 V & Aufdruck. WIMA, Aufdruck 1uF / 63-N / V3. Serie und Spannungsart prüfen. & -- \\
+    \hline
+    \textbf{P119} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P120} & Widerstand & 10 M\ensuremath{\Omega} & Aufdruck. Toleranz und Belastbarkeit nicht dokumentiert. & -- \\
+    \hline
+    \textbf{P121} & Widerstand & 1 M\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Gelb-Braun. & Q1 \\
+    \hline
+    \textbf{P122} & Potentiometer, vermutlich & vermutlich 20 k\ensuremath{\Omega} & vorläufig. Aufdruck M20K L8; 20K als Widerstand interpretiert. Kennlinie und Gesamtwiderstand prüfen. & -- \\
+    \hline
+    \textbf{P123} & Bauteil, nicht identifiziert & 565-2 / 0,4 A & offen. 0,4 A ist notiert, die Bauteilart bleibt ungeklärt. Foto und vollständige Kennzeichnung erforderlich. & -- \\
+    \hline
+    \textbf{P124} & Widerstand & 47 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P125} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P126} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P127} & Widerstand & 680 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Blau-Grau-Schwarz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P128} & Potentiometer & 10 k\ensuremath{\Omega} & Aufdruck. Aufdruck 10kO 842; Kennlinie und Bauform ungeklärt. & -- \\
+    \hline
+    \textbf{P129} & Widerstand & 390 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Orange-Weiß-Schwarz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P130} & Widerstand & 9,09 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Weiß-Schwarz-Weiß-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P131} & Widerstand & 9,09 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Weiß-Schwarz-Weiß-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P132} & Trimmpotentiometer & 5 k\ensuremath{\Omega} & Aufdruck. Aufdruck 5kO 7526D; in der Aufnahme als möglicherweise defekt vermerkt. Funktionsprüfung erforderlich. & -- \\
+    \hline
+    \textbf{P133} & Widerstand & 47 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P134} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P135} & Widerstand & 1 M\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Gelb-Braun. & Q1 \\
+    \hline
+    \textbf{P136} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P137} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P138} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P139} & Widerstand & 1 M\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Gelb-Braun. & Q1 \\
+    \hline
+    \textbf{P140} & Widerstand & 1 M\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Gelb-Braun. & Q1 \\
+    \hline
+    \textbf{P141} & Widerstand & 1 M\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Gelb-Braun. & Q1 \\
+    \hline
+    \textbf{P142} & Widerstand & 220 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Rot-Rot-Schwarz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P143} & Widerstand & 220 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Rot-Rot-Schwarz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P144} & Widerstand & 220 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Rot-Rot-Schwarz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P145} & Widerstand & 220 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode. 6. Ring rot: Zusatzkennzeichnung; Bedeutung/Temperaturkoeffizient prüfen. Ringe: Rot-Rot-Schwarz-Orange-Braun-Rot. & Q1 \\
+    \hline
+    \textbf{P146} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orage-Braun. & Q1 \\
+    \hline
+    \textbf{P147} & Diode, Typ ungeklärt & unbekannt & offen. Als Z-Diode erfasst, jedoch ohne Aufdruck. Bauteilart und gegebenenfalls Zenerspannung bestimmen. & -- \\
+    \hline
+    \textbf{P148} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orage-Braun. & Q1 \\
+    \hline
+    \textbf{P149} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P150} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orage-Braun. & Q1 \\
+    \hline
+    \textbf{P151} & Diode, Typ ungeklärt & möglicherweise 1N4148 & vorläufig. „PN4841“ und ähnliche Lesarten könnten zum Aufdruck 4148PH gehören. Nicht als Z-Diode bestätigt. Aufdruck/Foto prüfen. & Q10 \\
+    \hline
+    \textbf{P152} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P153} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P154} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P155} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P156} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P157} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P158} & Kondensator, vermutlich & möglicherweise 100 nF & vorläufig. Aufdruck 1042 / Mexiko: nur falls 104 der Kapazitätscode ist, 100 nF. Vierstelliger Gesamtcode nicht eindeutig. & Q15 \\
+    \hline
+    \textbf{P159} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P160} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P161} & Widerstand & 100 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Braun-Schwarz-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P162} & Trimmpotentiometer & Widerstand unbekannt & offen. Aufdruck 100 821 nicht eindeutig: 100 kann je nach Kennzeichnung 100 \ensuremath{\Omega} oder ein Code sein. Messen. & -- \\
+    \hline
+    \textbf{P163} & Widerstand & 82 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Grau-Rot-Schwarz-Rot-Braun. & Q1 \\
+    \hline
+    \textbf{P164} & Widerstand & 4,75 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Grün-Braun-Braun. & Q1 \\
+    \hline
+    \textbf{P165} & PNP-Transistor & BC307B & Typ. Kleinsignaltransistor zum Schalten und Verstärken; konkrete Funktion aus Beschaltung ableiten. & Q11 \\
+    \hline
+    \textbf{P166} & Widerstand & 470 k\ensuremath{\Omega}; \ensuremath{\pm}1 \% & Farbcode.  Ringe: Gelb-Lila-Schwarz-Orange-Braun. & Q1 \\
+    \hline
+    \textbf{P167} & Spannungsreferenz & LM329DZ / ca. 6,9 V & Typ. Kein diskreter Transistor. „524“ ist Zusatzaufdruck, kein Referenzspannungswert. & Q3 \\
+    \hline
+    \textbf{P168} & Widerstand & 2 k\ensuremath{\Omega}; \ensuremath{\pm}5 \% & Farbcode.  Ringe: Rot-Schwarz-Rot-Gold. & Q1 \\
+    \hline
+\end{GPMTable}
+
+\subsubsection*{Quellen zur Bauteilzuordnung}
+\begin{description}[style=nextline,leftmargin=1.2cm]
+\item[Q1] Vishay: Widerstandsfarbcode. \url{https://www.vishay.com/docs/49411/resistor_color_code_calculator.pdf} (Abruf: 27.10.2026).
+\item[Q2] Texas Instruments: TL497A. \url{https://www.ti.com/product/TL497A} (Abruf: 27.10.2026).
+\item[Q3] Analog Devices: LM329, 6,9-V-Spannungsreferenz. \url{https://www.analog.com/en/products/lm329.html} (Abruf: 27.10.2026).
+\item[Q4] Texas Instruments: CD4001B, NOR-Gatter. \url{https://www.ti.com/product/CD4001B/part-details/CD4001BE} (Abruf: 27.10.2026).
+\item[Q5] Renesas: ICL7621, zweifacher CMOS-Operationsverstärker. \url{https://www.renesas.com/en/products/icl7621} (Abruf: 27.10.2026).
+\item[Q6] Nexperia: HEF4528B, zweifaches Monoflop. \url{https://www.nexperia.com/products/analog-logic-ics/logic/specialty-logic/multivibrators/serie/hef4528b} (Abruf: 27.10.2026).
+\item[Q7] STMicroelectronics: HCF4051, Analogmultiplexer. \url{https://www.st.com/resource/en/datasheet/hcf4051.pdf} (Abruf: 27.10.2026).
+\item[Q8] Texas Instruments: TL061. \url{https://www.ti.com/product/TL061} (Abruf: 27.10.2026).
+\item[Q9] Vishay: BAT41, Schottkydiode. \url{https://www.vishay.com/docs/85659/bat41.pdf} (Abruf: 27.10.2026).
+\item[Q10] NXP/Philips: 1N4148, Originaldatenblatt mit Aufdruck 4148PH. \url{https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf} (Abruf: 27.10.2026).
+\item[Q11] Philips: BC307/BC307B, Originaldatenblatt im Archiv. \url{https://www.z80ne.com/datasheets/bc307b.pdf} (Abruf: 27.10.2026).
+\item[Q12] Siemens: SIPMOS-Datenbuch 1985, Druckseiten 7, 55 und 60 (BSS89/BSS91). \url{https://bitsavers.trailing-edge.com/components/siemens/1985_Siemens_SIPMOS_Small_Signal_Transistors__Power_Transistors.pdf} (Abruf: 27.10.2026).
+\item[Q13] Siemens: SIPMOS-Datenbuch 1987/88, Druckseite 160 (BUZ10). \url{https://bitsavers.trailing-edge.com/components/siemens/1987_Siemens_SIPMOS_Components.pdf} (Abruf: 27.10.2026).
+\item[Q14] Bourns: 4600X, dreistelliger Widerstandscode; kein Nachweis der konkreten Netzwerkserie. \url{https://www.bourns.com/docs/product-datasheets/4600x.pdf} (Abruf: 27.10.2026).
+\item[Q15] KYOCERA AVX: Kapazitätscode und Toleranz M; kein Nachweis der konkreten Kondensatorserie. \url{https://catalogs.kyocera-avx.com/SurfaceMount.pdf} (Abruf: 27.10.2026).
+\item[Q16] STMicroelectronics: L78L, positive 100-mA-Spannungsregler. \url{https://www.st.com/en/power-management/l78l.html} (Abruf: 27.10.2026).
+\item[Q17] Siemens: TAE1453, Datenblattbeschreibung im Archiv. \url{https://www.alldatasheet.com/datasheet-pdf/pdf/45790/SIEMENS/TAE1453.html} (Abruf: 27.10.2026).
+\end{description}
